@@ -8,7 +8,7 @@ G4TARGET := $(name)
 G4EXLIB := true
 
 ifndef G4INSTALL
-  G4INSTALL = ../../..
+  G4INSTALL = /usr/local/share/Geant4-10.3.1/geant4make
 endif
 
 .PHONY: setup clean_setup all
@@ -23,7 +23,7 @@ clean_setup:
 	@$(G4INSTALL)/examples/extended/common/scripts/clean_files.sh
 
 # ROOT support
-CPPFLAGS += -I$(shell root-config --incdir) 
+CPPFLAGS += -I$(shell root-config --incdir)
 EXTRALIBS = $(shell root-config --glibs)
 
 include $(G4INSTALL)/config/binmake.gmk
@@ -34,5 +34,3 @@ visclean:
 
 histclean:
 	rm ${G4WORKDIR}/tmp/${G4SYSTEM}/${G4TARGET}/HistoManager.o
-
-
