@@ -11,10 +11,13 @@ Department of Physics and Astronomy
 The application is written in C++ and uses the GEANT4 simulation toolkit as well as standard
 C++ libraries. This application builds from previous work done by Dario Gigliotti and from the
 GEANT4 example application TESTEM7. 
-The source code can be compiled using cmake in the standard way most GEANT4 applications can be compiled.
-NOTE: I used Linux based operating systems like Linux, Mageia and Mint to compile and run this application.
+The source code can be compiled using cmake in the standard way most GEANT4 applications can be compiled (i.e. - performing an "out of source" build as is described [here](http://geant4.web.cern.ch/geant4/UserDocumentation/UsersGuides/InstallationGuide/html/ch03s02.html)):
 
-`cmake -DGEANT4_DIR=$INSTALL_DIR$ $PATH_TO_SOURCE$ make -jn`
+```
+mkdir build
+cd build
+cmake -DGEANT4_DIR=$INSTALL_DIR$ $PATH_TO_SOURCE$ make -jn
+```
 
 where `n` is the number of cores you wish to use.
 
