@@ -14,21 +14,22 @@ GEANT4 example application TESTEM7.
 The source code can be compiled using cmake in the standard way most GEANT4 applications can be compiled.
 NOTE: I used Linux based operating systems like Linux, Mageia and Mint to compile and run this application.
 
-cmake -DGEANT4_DIR=$INSTALL_DIR$ $PATH_TO_SOURCE$
-make -j*	
-where * is the number of cores you wish to use.
+`cmake -DGEANT4_DIR=$INSTALL_DIR$ $PATH_TO_SOURCE$ make -jn`
+
+where `n` is the number of cores you wish to use.
 
 Commands can be entered from the UI or from batch. To run a macro from batch enter:
-./Si_Ion_Chamber_v8.2 $MACRO$ > $G4cout OUTPUT FILE$
+
+`./Si_Ion_Chamber_v8.2 $MACRO$ > $G4cout OUTPUT FILE$`
 
 To run a macro from the UI use the command:
-/control/execute $MACRO$
+`/control/execute $MACRO$`
 			
 The application opens in the pre-initialization stage. Here the user can set detector geometries and material
 types. 
-Type ls to see the list of commands.
-cd $dir$ navigates to other directories and .. sends you back to the previous directory.
-App-specific commands are located in the testem command directory. Associated help commands can be entered
+Type `ls` to see the list of commands.
+
+App-specific commands are located in the `testem` command directory. Associated help commands can be entered
 to explain their function and a list can be seen in the source code file DetectorMessenger.cc. All UI 
 commands are defined within their associated messenger source code files.
 
@@ -37,28 +38,29 @@ DetectorConstruction.cc with the exception of the DSSSD dead layer which must cu
 in the source code.
 
 Isobutane pressure can be set from 1 to 31 torr by entering the command:
-/testem/det/setGasMat isobutane*torr
-where * is an integer from 1 to 31.
+`/testem/det/setGasMat isobutane$Ptorr`
+where `$P` is an integer from 1 to 31.
 There is nothing stopping the user from defining other pressures within the source code. Just add the
 material in DetectorConstruction.cc.
 
 The length of the gas chamber along the beam axis can be set by:
-/testem/det/setGasThick
+`/testem/det/setGasThick`
+
 The sensitive regions of the gas can be set by three commands:
-/testem/det/setAnodePosition	//sets the origin of the sensitive region
+`/testem/det/setAnodePosition	//sets the origin of the sensitive region
 /testem/det/setAnodeLength		//sets the region length along the beam axis
-/testem/det/setSegmentLength	//divides the length into equal segments with dead regions	
-								//if the lengths do not divide evenly into the total length.
+/testem/det/setSegmentLength	//divides the length into equal segments with dead regions
+								//if the lengths do not divide evenly into the total length.`
 
 Once detector parameters are set the user should enter the initialized stage.
-/run/initialize
+`/run/initialize`
 
 From here the user can specify the parameters of the general particle source (GPS). The GPS is unaltered
 from the GEANT4 tool and the user can see the GEANT4 documentation for instruction in its use however
 I have included an example below.
 
 Specifying a beam of carbon ions
-/gps/particle ion    	//specify an ion type projectile
+`/gps/particle ion    	//specify an ion type projectile
 /gps/ion 6 12 0			//The ion has Z=6	A=12 Q=0
 /gps/ene/type Gauss		//The beam energy spectrum is of gaussian type, each ion is sampled from a Gaussian profile.
 /gps/ene/mono 10 MeV	//The gaussian profile peaks at 10 MeV
@@ -69,7 +71,7 @@ Specifying a beam of carbon ions
 /gps/ang/type beam1d	//Specifies a 1D beam angular distribution
 /gps/ang/sigma 10 mrad	//Set STDEV in the angular distribution 
 /gps/ang/rot1 0 0 1
-/run/beamOn 1000		//Begins a run with 1000 events
+/run/beamOn 1000		//Begins a run with 1000 events`
 
 Simulation results are displayed in the GEANT4 window at the end of the run. Results are also recorded in text
 files within the application directory as well as a ROOT tree. 
