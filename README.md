@@ -67,7 +67,7 @@ Once detector parameters are set the user should enter the initialized stage.
 From here the user can specify the parameters of the general particle source (GPS). The GPS is unaltered
 from the Geant4 tool and the user can see the Geant4 documentation for instruction in its use.
 
-As and example, to specify a beam of carbon ions, one may issue the following commands:
+As an example, to specify a beam of carbon ions, one may issue the following commands:
 ```
 /gps/particle ion		//specify an ion type projectile
 /gps/ion 6 12 0			//The ion has Z=6	A=12 Q=0
