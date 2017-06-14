@@ -47,10 +47,12 @@ The length of the gas chamber along the beam axis can be set by:
 `/testem/det/setGasThick`
 
 The sensitive regions of the gas can be set by three commands:
-`/testem/det/setAnodePosition	//sets the origin of the sensitive region
+```
+/testem/det/setAnodePosition	//sets the origin of the sensitive region
 /testem/det/setAnodeLength		//sets the region length along the beam axis
 /testem/det/setSegmentLength	//divides the length into equal segments with dead regions
-								//if the lengths do not divide evenly into the total length.`
+								//if the lengths do not divide evenly into the total length.
+```
 
 Once detector parameters are set the user should enter the initialized stage.
 `/run/initialize`
@@ -60,7 +62,8 @@ from the GEANT4 tool and the user can see the GEANT4 documentation for instructi
 I have included an example below.
 
 Specifying a beam of carbon ions
-`/gps/particle ion    	//specify an ion type projectile
+```
+/gps/particle ion    	//specify an ion type projectile
 /gps/ion 6 12 0			//The ion has Z=6	A=12 Q=0
 /gps/ene/type Gauss		//The beam energy spectrum is of gaussian type, each ion is sampled from a Gaussian profile.
 /gps/ene/mono 10 MeV	//The gaussian profile peaks at 10 MeV
@@ -71,7 +74,8 @@ Specifying a beam of carbon ions
 /gps/ang/type beam1d	//Specifies a 1D beam angular distribution
 /gps/ang/sigma 10 mrad	//Set STDEV in the angular distribution 
 /gps/ang/rot1 0 0 1
-/run/beamOn 1000		//Begins a run with 1000 events`
+/run/beamOn 1000		//Begins a run with 1000 events
+```
 
 Simulation results are displayed in the GEANT4 window at the end of the run. Results are also recorded in text
 files within the application directory as well as a ROOT tree. 
