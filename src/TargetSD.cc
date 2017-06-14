@@ -37,7 +37,7 @@
 // Modified:
 //
 ////////////////////////////////////////////////////////////////////////
-// 
+//
 
 #include "TargetSD.hh"
 #include "globals.hh"
@@ -89,4 +89,3 @@ void TargetSD::PrintAll()
 {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-

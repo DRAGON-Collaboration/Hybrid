@@ -46,19 +46,19 @@ class HistoManager;
 
 class TrackingAction : public G4UserTrackingAction {
 
-  public:  
+  public:
   TrackingAction(DetectorConstruction*,RunAction*,EventAction*);
    ~TrackingAction() {};
-   
-    virtual void  PreUserTrackingAction(const G4Track*);   
+
+    virtual void  PreUserTrackingAction(const G4Track*);
     virtual void PostUserTrackingAction(const G4Track*);
-    
+
   private:
     DetectorConstruction* fDetector;
-    RunAction*            fRunAction;    
+    RunAction*            fRunAction;
     EventAction*          fEventAction;
     HistoManager*         fHisto;
-    
+
     G4double fPrimaryCharge;
 };
 

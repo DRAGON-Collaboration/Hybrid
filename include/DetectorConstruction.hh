@@ -67,7 +67,7 @@ public:
   public:
 
      void SetWindowMaterial (G4String);
-     void SetWindowThickness(G4double);     
+     void SetWindowThickness(G4double);
 
   // void SetGasMaterial (G4Material*);
      void SetGasMaterial(G4String);
@@ -96,9 +96,9 @@ public:
 
      G4Material* GetWindowMaterial()	{return fWindowMaterial;};
      G4double    GetWindowThickness()   {return fWindowThickness;};
-     G4double 	 GetWindowSizeYZ()	{return fWindowSizeYZ;};
- 
-     G4Material* GetGasMaterial()  {return fGasMaterial;};             
+     G4double    GetWindowSizeYZ()	{return fWindowSizeYZ;};
+
+     G4Material* GetGasMaterial()  {return fGasMaterial;};
      G4double    GetGasThickness() {return fGasThickness;};
      G4double    GetGasSizeYZ()    {return fGasSizeYZ;};
 
@@ -124,23 +124,23 @@ public:
      const G4MaterialCutsCouple* GetGasMaterialCut()  const
                              {return fLogicGas->GetMaterialCutsCouple();};
   private:
-	G4NistManager* man;
-  
+    G4NistManager* man;
+
   // G4double IsobutaneDensity, IsobutanePressure;
      //DSSSD Components
      // active silicon strip
      G4Box*             fSolidDSSSDActive;
      G4LogicalVolume*   fLogicDSSSDActive;
      G4VPhysicalVolume* fPhysiDSSSDActive;
-     G4Material*	fDSSSDActiveMaterial; 	
+     G4Material*	fDSSSDActiveMaterial;
      G4double		fDSSSDActiveSizeZ;	// active strip width
      G4double		fDSSSDActiveThickness;	// active, gap, holder same thickness
-    
+
      // dead layer
      G4Box*             fSolidDSSSDDeadlayer;
      G4LogicalVolume*   fLogicDSSSDDeadlayer;
      G4VPhysicalVolume* fPhysiDSSSDDeadlayer;
-     G4Material*	fDSSSDDeadlayerMaterial; 	
+     G4Material*	fDSSSDDeadlayerMaterial;
      G4double		fDSSSDDeadlayerThickness;
 
      // mother holder for front and backs strips and deadlayer
@@ -157,13 +157,13 @@ public:
      G4Box*             fSolidDSSSDGap;
      G4LogicalVolume*   fLogicDSSSDGap;
      G4VPhysicalVolume* fPhysiDSSSDGap;
-     G4Material*	fDSSSDGapMaterial;	
+     G4Material*	fDSSSDGapMaterial;
      G4double		fDSSSDGapSizeZ;		// gap width
      // mother holder for Si + gap and then gets replicated for front and back strips
      G4Box*             fSolidDSSSDStrip;
      G4LogicalVolume*   fLogicDSSSDStrip;
      G4VPhysicalVolume* fPhysiDSSSDStrip;
-     G4Material*	fDSSSDStripMaterial; 	
+     G4Material*	fDSSSDStripMaterial;
      G4double		fDSSSDStripThickness;	// active, gap, holder same thickness
      G4double		fDSSSDStripSizeY;	// strip length
      G4double		fDSSSDStripSizeZ;	// strip width
@@ -183,11 +183,11 @@ public:
      G4LogicalVolume*   fLogicWindow;
      G4VPhysicalVolume* fPhysiWindow;
      G4Material*	fWindowMaterial;
-     G4double 		fWindowThickness;
+     G4double       fWindowThickness;
      G4double		fWindowSizeYZ;
-     G4double		fXposWindow;    
-     
-     
+     G4double		fXposWindow;
+
+
      // Ionization Gas Gas
      G4Box*             fSolidGas;
      G4LogicalVolume*   fLogicGas;
@@ -198,7 +198,7 @@ public:
      G4double           fXposGas;
      G4double           fXstartGas, fXendGas;
 
-  
+
   //Anode Holder Volume
   G4double fAnodeX;
   G4double fAnodePosition;
@@ -219,7 +219,7 @@ public:
      G4Box*             fSolidWorld;
      G4LogicalVolume*   fLogicWorld;
      G4VPhysicalVolume* fPhysiWorld;
-     G4Material*        fWorldMaterial;     
+     G4Material*        fWorldMaterial;
      G4Region* fRegGasDet; //Required for PAI model
      G4ProductionCuts* fGasDetectorCuts; //Required for PAI model
      TargetSD*          fTargetSD;
@@ -228,19 +228,18 @@ public:
      G4bool             fDefaultWorld;
 
   //G4UniformMagField* fMagField;
-  G4Cache<F02ElectricFieldSetup*> fEmFieldSetup; 
+  G4Cache<F02ElectricFieldSetup*> fEmFieldSetup;
      DetectorMessenger* fDetectorMessenger;
 
   G4bool fCheckOverlaps; //Option to activate checking of overlaps
   private:
-    
+
      void DefineMaterials();
      void ComputeCalorParameters();
-     G4VPhysicalVolume* ConstructCalorimeter();     
+     G4VPhysicalVolume* ConstructCalorimeter();
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 
 #endif
-

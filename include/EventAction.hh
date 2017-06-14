@@ -64,12 +64,12 @@ public: // Without description
   virtual void BeginOfEventAction(const G4Event*);
   virtual void   EndOfEventAction(const G4Event*);
 
-	//functions accumulating run variables
+    //functions accumulating run variables
   void AddWindow(G4double de) {fEnergyWindow+=de;};
   void AddGas(G4double de) {fEnergyGas += de;};
   void AddDSSSD(G4double de) {fEnergyDSSSD += de;};
   void AddSegment(G4int, G4double, G4double);
-		  //, G4double);
+          //, G4double);
   void AddIons(G4double de) {totIons += de;};
   void AddStepLength(G4double de) {totStepLength += de;};
 
@@ -90,12 +90,12 @@ private:
   G4double fNonIonWindow, fNonIonGas, fNonIonDSSSD;
   G4double IonsAlongStep;
   G4double totIons, totStepLength;
-  
+
   std::vector<G4double> SegmentEdep;
   std::vector<G4double> SegmentIons;
   std::vector<G4double> SegmentStepLength;
-  
- 
+
+
 };
 
 #endif

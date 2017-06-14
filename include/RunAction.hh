@@ -57,10 +57,10 @@ class RunAction : public G4UserRunAction
   public:
     void BeginOfRunAction(const G4Run*);
     void   EndOfRunAction(const G4Run*);
-    
+
   void fillPerEvent(G4double, G4double, G4double, std::vector<G4double>&, std::vector<G4double>&);
   void fillPerEventNonIonizing(G4double, G4double, G4double);
-                                    
+
   private:
     DetectorConstruction*   fDetector;
     PrimaryGeneratorAction* fPrimary;
@@ -75,10 +75,9 @@ class RunAction : public G4UserRunAction
   G4double fSumEWindowNonIon, fSum2EWindowNonIon;
   G4double fSumEDSSSDNonIon, fSum2EDSSSDNonIon;
   G4double fSumEGasNonIon, fSum2EGasNonIon;
-  
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-

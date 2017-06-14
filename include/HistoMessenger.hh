@@ -61,7 +61,7 @@ private:
   HistoManager* fHisto;
   G4UIcommand*  fHistoCmd;
   G4UIcommand*  fHistoFile;
- 
+
 
 };
 

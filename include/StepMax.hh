@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file electromagnetic/Si_Ion_Chamber_v7/include/StepMax.hh
+/// \file electromagnetic/TestEm7/include/StepMax.hh
 /// \brief Definition of the StepMax class
 //
 // $Id: StepMax.hh 66241 2012-12-13 18:34:42Z gunter $
@@ -45,36 +45,36 @@ class StepMaxMessenger;
 
 class StepMax : public G4VDiscreteProcess
 {
-public:
+  public:
 
-  StepMax(const G4String& processName = "UserMaxStep");
-  ~StepMax();
+     StepMax(const G4String& processName = "UserMaxStep");
+    ~StepMax();
 
-  void SetMaxStep(G4double);
+     virtual G4bool IsApplicable(const G4ParticleDefinition&);
 
-  inline G4double GetMaxStep() { return fMaxChargedStep; };
+     void SetMaxStep(G4double);
 
-  virtual G4bool IsApplicable(const G4ParticleDefinition&);
+     G4double GetMaxStep() {return fMaxChargedStep;};
 
-  virtual G4double 
-  PostStepGetPhysicalInteractionLength(const G4Track& track,
-                                       G4double previousStepSize,
-                                       G4ForceCondition* condition);
+     virtual
+     G4double PostStepGetPhysicalInteractionLength( const G4Track& track,
+                                               G4double previousStepSize,
+                                               G4ForceCondition* condition);
 
-  virtual G4VParticleChange* PostStepDoIt(const G4Track&, const G4Step&);
+     virtual
+     G4VParticleChange* PostStepDoIt(const G4Track&, const G4Step&);
 
-  virtual G4double 
-  GetMeanFreePath(const G4Track&, G4double, G4ForceCondition*);
+     virtual
+     G4double GetMeanFreePath(const G4Track&, G4double,G4ForceCondition*)
+     {return DBL_MAX;};
 
-private:
+  private:
 
-  G4double fMaxChargedStep;
-  G4double fProposedStep;
+     G4double fMaxChargedStep;
 
-  StepMaxMessenger* fMessenger;
+     StepMaxMessenger* fMess;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-

@@ -23,23 +23,11 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file electromagnetic/Si_Ion_Chamber_v7/include/PhysicsListMessenger.hh
+/// \file electromagnetic/TestEm7/include/PhysicsListMessenger.hh
 /// \brief Definition of the PhysicsListMessenger class
 //
+// $Id: PhysicsListMessenger.hh 82280 2014-06-13 14:45:31Z gcosmo $
 //
-// $Id: PhysicsListMessenger.hh 67235 2013-02-08 16:34:49Z vnivanch $
-//
-//---------------------------------------------------------------------------
-//
-// ClassName:   PhysicsListMessenger
-//
-// Description: EM physics with a possibility to add PAI model
-//
-// Author:      V.Ivanchenko 01.09.2010
-//
-//----------------------------------------------------------------------------
-// 
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -50,32 +38,29 @@
 #include "G4UImessenger.hh"
 
 class PhysicsList;
-class G4UIcmdWithADoubleAndUnit;
+class G4UIdirectory;
 class G4UIcmdWithAString;
-class G4UIcmdWithAnInteger;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class PhysicsListMessenger: public G4UImessenger
 {
-public:
-  
-  PhysicsListMessenger(PhysicsList* );
-  virtual ~PhysicsListMessenger();
-    
-  virtual void SetNewValue(G4UIcommand*, G4String);
-    
-private:
-  
-  PhysicsList* fPhysicsList;
-    
- 
-  G4UIcmdWithAString*        fListCmd;
- 
-    
+  public:
+
+    PhysicsListMessenger(PhysicsList* );
+   ~PhysicsListMessenger();
+
+    virtual void SetNewValue(G4UIcommand*, G4String);
+
+  private:
+
+    PhysicsList*               fPhysicsList;
+
+    G4UIdirectory*             fPhysDir;
+    G4UIcmdWithAString*        fListCmd;
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-

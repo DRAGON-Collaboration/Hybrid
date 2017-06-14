@@ -89,7 +89,7 @@ private:
   G4EqMagElectricField*   fEquation;
 
   G4ElectricField*        fEMfield;
- 
+
   G4ThreeVector           fElFieldValue;
 
   G4MagIntegratorStepper* fStepper;
@@ -98,7 +98,7 @@ private:
   G4int                   fStepperType;
 
   G4double                fMinStep;
- 
+
   F02FieldMessenger*      fFieldMessenger;
 
 };

@@ -52,7 +52,7 @@ TrackingAction::TrackingAction(DetectorConstruction* DET,RunAction* RA,
                                EventAction* EA)
   :fDetector(DET), fRunAction(RA), fEventAction(EA), fHisto(HistoManager::GetPointer())
 { }
- 
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void TrackingAction::PreUserTrackingAction(const G4Track* aTrack )
@@ -68,10 +68,10 @@ void TrackingAction::PreUserTrackingAction(const G4Track* aTrack )
 
 void TrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 {
- 
+
   G4ThreeVector fPosition = aTrack->GetPosition();
   G4double charge = aTrack->GetDefinition()->GetPDGCharge();
-	//passes ion positions to HistoManager
+    //passes ion positions to HistoManager
   if(aTrack->GetDefinition()->GetParticleName() != "e-" &&  charge != 0)
   {
     fHisto->SetPosition(fPosition.x(), fPosition.y(), fPosition.z());
@@ -80,4 +80,3 @@ void TrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-

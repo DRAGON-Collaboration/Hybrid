@@ -55,9 +55,7 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
   private:
     DetectorConstruction* fDetector;
     G4GeneralParticleSource* fParticleGun;
-   
+
 };
 
 #endif
-
-

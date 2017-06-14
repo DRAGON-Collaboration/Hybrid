@@ -53,7 +53,7 @@ class F02FieldMessenger: public G4UImessenger
     virtual ~F02FieldMessenger();
 
     virtual void SetNewValue(G4UIcommand*, G4String);
- 
+
   private:
 
     F02ElectricFieldSetup*     fElFieldSetup;

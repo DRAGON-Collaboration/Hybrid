@@ -73,7 +73,7 @@ F02FieldMessenger::F02FieldMessenger(F02ElectricFieldSetup* fieldSetup)
   fElFieldCmd->SetParameterName("Ez",false,false);
   fElFieldCmd->SetDefaultUnit("volt/m");
   fElFieldCmd->AvailableForStates(G4State_Idle);
- 
+
   fMinStepCmd = new G4UIcmdWithADoubleAndUnit("/field/setMinStep",this);
   fMinStepCmd->SetGuidance("Define minimal step");
   fMinStepCmd->SetParameterName("min step",false,false);

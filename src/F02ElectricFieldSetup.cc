@@ -65,9 +65,7 @@
 #include "G4SystemOfUnits.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//Fields are not used in this application because GEANT4 cannot handle secondary particle 
-//drift very well. To use this uncomment the relavent function in DetectorConstruction and 
-//set a nonzero field value below.
+
 //  Constructors:
 
 F02ElectricFieldSetup::F02ElectricFieldSetup()
@@ -82,7 +80,7 @@ F02ElectricFieldSetup::F02ElectricFieldSetup()
    fMinStep(0.010*mm)  // minimal step of 10 microns
 {
   fEMfield = new G4UniformElectricField(
-                   G4ThreeVector(0.0,0.0*volt/cm,0.0));
+                   G4ThreeVector(0.0,100000.0*kilovolt/cm,0.0));
   fEquation = new G4EqMagElectricField(fEMfield);
 
   fFieldManager = GetGlobalFieldManager();

@@ -49,7 +49,7 @@ HistoMessenger::HistoMessenger(HistoManager* hist)
 {
   fHistoFile = new G4UIcmdWithAString("/testem/histo/setRootFile",this);
   fHistoFile->SetGuidance ("Enter name of root file");
-  fHistoFile->SetGuidance ("Default: Si_Ion_v6.root"); 
+  fHistoFile->SetGuidance ("Default: Si_Ion_v6.root");
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

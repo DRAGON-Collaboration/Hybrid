@@ -49,74 +49,74 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
    fWorldXCmd(0), fWorldYZCmd(0), fUpdateCmd(0),
    fIonCmd(0), fDetector(Det), fAnodePosCmd(0), fAnodeLengthCmd(0),
    fSegmentLengthCmd(0)
-{ 
+{
   fTestemDir = new G4UIdirectory("/testem/");
   fTestemDir->SetGuidance("UI commands specific to this example.");
-  
+
   fDetDir = new G4UIdirectory("/testem/det/");
   fDetDir->SetGuidance("detector construction commands");
-      
+
   fGasMaterCmd = new G4UIcmdWithAString("/testem/det/setGasMat",this);
   fGasMaterCmd->SetGuidance("Select Material of the Gas.");
   fGasMaterCmd->SetParameterName("choice",false);
   fGasMaterCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fWorldMaterCmd = new G4UIcmdWithAString("/testem/det/setWorldMat",this);
   fWorldMaterCmd->SetGuidance("Select Material of the World.");
   fWorldMaterCmd->SetParameterName("wchoice",false);
   fWorldMaterCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fWinMaterCmd = new G4UIcmdWithAString("/testem/det/setWinMat", this);
   fWinMaterCmd->SetGuidance("Select Material of the Window.");
   fWinMaterCmd->SetParameterName("wchoice",false);
   fWinMaterCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fWinThickCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setWinThick",this);
   fWinThickCmd->SetGuidance("Set Thickness of the Window");
-  fWinThickCmd->SetParameterName("SizeZ",false);  
+  fWinThickCmd->SetParameterName("SizeZ",false);
   fWinThickCmd->SetRange("SizeZ>0.");
-  fWinThickCmd->SetUnitCategory("Length");  
+  fWinThickCmd->SetUnitCategory("Length");
   fWinThickCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fGasThickCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setGasThick",this);
   fGasThickCmd->SetGuidance("Set Thickness of the Gas");
-  fGasThickCmd->SetParameterName("SizeZ",false);  
+  fGasThickCmd->SetParameterName("SizeZ",false);
   fGasThickCmd->SetRange("SizeZ>0.");
-  fGasThickCmd->SetUnitCategory("Length");  
+  fGasThickCmd->SetUnitCategory("Length");
   fGasThickCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fGasSizYZCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setGasYZ",this);
   fGasSizYZCmd->SetGuidance("Set sizeYZ of the Gas");
   fGasSizYZCmd->SetParameterName("SizeYZ",false);
   fGasSizYZCmd->SetRange("SizeYZ>0.");
   fGasSizYZCmd->SetUnitCategory("Length");
   fGasSizYZCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fGasXposCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setGasXpos",this);
   fGasXposCmd->SetGuidance("Set X pos. of the Gas");
   fGasXposCmd->SetParameterName("Xpos",false);
   fGasXposCmd->SetUnitCategory("Length");
   fGasXposCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fWorldXCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setWorldX",this);
   fWorldXCmd->SetGuidance("Set X size of the World");
   fWorldXCmd->SetParameterName("WSizeX",false);
   fWorldXCmd->SetRange("WSizeX>0.");
   fWorldXCmd->SetUnitCategory("Length");
   fWorldXCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fWorldYZCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setWorldYZ",this);
   fWorldYZCmd->SetGuidance("Set sizeYZ of the World");
   fWorldYZCmd->SetParameterName("WSizeYZ",false);
   fWorldYZCmd->SetRange("WSizeYZ>0.");
   fWorldYZCmd->SetUnitCategory("Length");
   fWorldYZCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
+
   fUpdateCmd = new G4UIcmdWithoutParameter("/testem/det/update",this);
   fUpdateCmd->SetGuidance("Update calorimeter geometry.");
   fUpdateCmd->SetGuidance("This command MUST be applied before \"beamOn\" ");
   fUpdateCmd->SetGuidance("if you changed geometrical value(s).");
-  fUpdateCmd->AvailableForStates(G4State_Idle);  
+  fUpdateCmd->AvailableForStates(G4State_Idle);
 
   fIonCmd = new G4UIcmdWithADoubleAndUnit("/testem/setPairEnergy", this);
   fIonCmd->SetGuidance("Set energy per electron-ion pair for detector");
@@ -153,48 +153,48 @@ DetectorMessenger::~DetectorMessenger()
 {
   delete fWinMaterCmd;
   delete fWinThickCmd;
-  delete fGasMaterCmd; 
-  delete fGasThickCmd; 
-  delete fGasSizYZCmd;  
-  delete fGasXposCmd; 
+  delete fGasMaterCmd;
+  delete fGasThickCmd;
+  delete fGasSizYZCmd;
+  delete fGasXposCmd;
   delete fWorldMaterCmd;
   delete fWorldXCmd;
   delete fWorldYZCmd;
   delete fUpdateCmd;
-  delete fDetDir;  
+  delete fDetDir;
   delete fTestemDir;
   delete fIonCmd;
- 
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
-{ 
+{
   if (command == fWinMaterCmd)
-	{fDetector->SetWindowMaterial(newValue);}
+    {fDetector->SetWindowMaterial(newValue);}
 
   if ( command == fGasMaterCmd )
    {fDetector->SetGasMaterial(newValue);}
-   
+
   if ( command == fWorldMaterCmd )
    {fDetector->SetWorldMaterial(newValue);}
-   
+
   if ( command == fGasThickCmd )
   {fDetector->SetGasThickness(fGasThickCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fWinThickCmd )
   {fDetector->SetWindowThickness(fWinThickCmd->GetNewDoubleValue(newValue));}
-   
+
   if ( command == fGasSizYZCmd )
    {fDetector->SetGasSizeYZ(fGasSizYZCmd->GetNewDoubleValue(newValue));}
-   
+
   if ( command == fGasXposCmd )
    {fDetector->SetGasXpos(fGasXposCmd->GetNewDoubleValue(newValue));}
-   
+
   if ( command == fWorldXCmd )
    {fDetector->SetWorldSizeX(fWorldXCmd->GetNewDoubleValue(newValue));}
-   
+
   if ( command == fWorldYZCmd )
    {fDetector->SetWorldSizeYZ(fWorldYZCmd->GetNewDoubleValue(newValue));}
 
@@ -206,7 +206,7 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 
   if ( command == fSegmentLengthCmd )
     {fDetector->SetSegmentLength(fSegmentLengthCmd->GetNewDoubleValue(newValue));}
-   
+
   if  ( command == fUpdateCmd )
    {fDetector->UpdateGeometry(); }
 

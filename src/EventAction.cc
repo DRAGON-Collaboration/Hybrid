@@ -51,8 +51,8 @@
 EventAction::EventAction(PrimaryGeneratorAction* kin, RunAction* run, DetectorConstruction* det)
   : G4UserEventAction(), fPrimary(kin), fPrintModulo(0), fRunAct(run), fDetector(det), fHisto(HistoManager::GetPointer())
 {
-	//Print eventID every 'fPrintModulo' event.
-    fPrintModulo = 100;   
+    //Print eventID every 'fPrintModulo' event.
+    fPrintModulo = 100;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -64,27 +64,27 @@ EventAction::~EventAction()
 
 void EventAction::BeginOfEventAction(const G4Event* evt)
 {
-	//Clear event data vectors
-    SegmentEdep.clear(); 
+    //Clear event data vectors
+    SegmentEdep.clear();
     SegmentIons.clear();
     SegmentStepLength.clear();
     totIons = totStepLength = 0.;
 
     NumberOfSegments = fDetector -> GetNumberOfSegments();
-    
+
     //Define size of Vectors containing energy information in each segment
     for (int i=0; i< NumberOfSegments; i++)
       {
-	SegmentEdep.push_back(0.);
-	SegmentIons.push_back(0.);
-	SegmentStepLength.push_back(0.);
+    SegmentEdep.push_back(0.);
+    SegmentIons.push_back(0.);
+    SegmentStepLength.push_back(0.);
       }
 
   G4int evtNb = evt->GetEventID();
   if (evtNb%fPrintModulo == 0)
     G4cout << "\n--> Begin of event:  " << evtNb << G4endl;
 
-	//Initialize data members
+    //Initialize data members
   fEnergyWindow = 0.;
   fEnergyDSSSD = 0.;
   fEnergyGas = 0.;
@@ -97,7 +97,7 @@ void EventAction::BeginOfEventAction(const G4Event* evt)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-void EventAction::AddSegment(G4int CopyNo, G4double edep, G4double Ions)			     
+void EventAction::AddSegment(G4int CopyNo, G4double edep, G4double Ions)
 {
   G4int n = CopyNo-1;
   SegmentEdep[n] += edep;
@@ -112,10 +112,10 @@ void EventAction::EndOfEventAction(const G4Event*)
   //accumulates statistic
   fRunAct -> fillPerEvent(fEnergyWindow, fEnergyDSSSD, fEnergyGas, SegmentEdep, SegmentIons);
   fRunAct->fillPerEventNonIonizing(fNonIonWindow, fNonIonDSSSD, fNonIonGas);
-  fHisto-> fillPerEvent(fEnergyWindow, fEnergyDSSSD, fEnergyGas, SegmentEdep, SegmentIons, 
-			totIons, totStepLength);
+  fHisto-> fillPerEvent(fEnergyWindow, fEnergyDSSSD, fEnergyGas, SegmentEdep, SegmentIons,
+            totIons, totStepLength);
   //Histomanager called at end of each event
-  fHisto->EndOfEvent(fPrimary);  
+  fHisto->EndOfEvent(fPrimary);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

@@ -29,7 +29,7 @@
 //
 // $Id: SteppingAction.hh 68015 2013-03-13 13:27:27Z gcosmo $
 //
-// 
+//
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -59,15 +59,15 @@ public:
   virtual ~SteppingAction();
 
   virtual void UserSteppingAction(const G4Step*);
-    
+
 private:
- 
+
   G4double totDistance;
   G4double* ftotDistance;
   G4double headerFlag;
   G4double* fheaderFlag;
   DetectorConstruction* fDetector;
-  PrimaryGeneratorAction* fPrimary;  
+  PrimaryGeneratorAction* fPrimary;
   EventAction* fEventAction;
   G4ElectronIonPair* fElIonPair;
 };

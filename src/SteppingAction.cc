@@ -29,7 +29,7 @@
 //
 // $Id: SteppingAction.cc 68015 2013-03-13 13:27:27Z gcosmo $
 //
-// 
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -50,8 +50,8 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 SteppingAction::SteppingAction(DetectorConstruction* det, PrimaryGeneratorAction* kin, EventAction* evt)
-: G4UserSteppingAction(), 
-  fDetector(det), fPrimary(kin), fEventAction(evt), fElIonPair(0)                                         
+: G4UserSteppingAction(),
+  fDetector(det), fPrimary(kin), fEventAction(evt), fElIonPair(0)
 {
   fElIonPair = G4LossTableManager::Instance()->ElectronIonPair();
 }
@@ -64,13 +64,13 @@ SteppingAction::~SteppingAction()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void SteppingAction::UserSteppingAction(const G4Step* aStep)
-{  
+{
    //get volume of the current step
   G4VPhysicalVolume* volume = aStep->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
   G4Material* TrackingMaterial = aStep -> GetTrack() ->
-  GetVolume() -> 
+  GetVolume() ->
   GetLogicalVolume() ->
-  GetMaterial(); 
+  GetMaterial();
   G4double IonsAlongStep = fElIonPair->SampleNumberOfIonsAlongStep(aStep);
 
   //Get step particle definition
@@ -84,8 +84,8 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   if (volume == fDetector->GetWindow()) fEventAction->AddWindowNonIon(edepNonIon);
   if (volume == fDetector->GetDSSSD()) fEventAction->AddDSSSDNonIon(edepNonIon);
   if (TrackingMaterial == fDetector->GetGasMaterial()) fEventAction->AddGasNonIon(edepNonIon);
-      
-      
+
+
   if (volume == fDetector->GetWindow()) fEventAction->AddWindow(edep);
   if (volume == fDetector->GetDSSSD()) fEventAction->AddDSSSD(edep);
   if (TrackingMaterial == fDetector->GetGasMaterial())
@@ -93,19 +93,18 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
       fEventAction->AddGas(edep);
       fEventAction->AddIons(IonsAlongStep);
       if (stepParticle == fPrimary->GetParticleGun()->GetParticleDefinition())
-	{fEventAction->AddStepLength(StepLength);}
+    {fEventAction->AddStepLength(StepLength);}
       }
- 
+
   //Log Energy Deposition in each anode segment
- 
-      if (volume->GetCopyNo() != 0) 
-	{
-	  fEventAction->AddSegment(volume->GetCopyNo(), edep, IonsAlongStep);
-				   //, StepLength);
-	}
-     
- 
+
+      if (volume->GetCopyNo() != 0)
+    {
+      fEventAction->AddSegment(volume->GetCopyNo(), edep, IonsAlongStep);
+                   //, StepLength);
+    }
+
+
  }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-

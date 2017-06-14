@@ -25,15 +25,15 @@ include(${Geant4_USE_FILE})
 #
 find_package(ROOT QUIET)
 if(NOT ROOT_FOUND)
-  message(STATUS "G4 Examples: ROOT package not found. --> Si_Ion_Chamber_v8 example disabled")  
+  message(STATUS "G4 Examples: ROOT package not found. --> Si_Ion_Chamber_v8 example disabled")
   return()
 endif()
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 #
-include_directories(${PROJECT_SOURCE_DIR}/include 
+include_directories(${PROJECT_SOURCE_DIR}/include
                     ${Geant4_INCLUDE_DIR}
-		    ${ROOT_INCLUDE_DIR})
+            ${ROOT_INCLUDE_DIR})
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
@@ -64,4 +64,3 @@ endforeach()
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
 install(TARGETS Si_Ion_Chamber_v8 DESTINATION bin)
-
