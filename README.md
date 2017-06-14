@@ -1,12 +1,13 @@
-# IC-DSSSD-GEANT4
+# DRAGON Hybrid Detector
 GEANT4 source code for an application simulating a hybrid ionization chamber / double-sided-silicon
 strip detector to operate as a dE vs E detector for heavy ions within astrophysical energy ranges.
 
 Simulating a Hybrid Ionization Chamber / Double-Sided-Silicon-Strip Detector
-Version: Si_Ion_Chamber_v8.2
 Author: Devin Burke  Email: burkeds@mcmaster.ca
 McMaster University
 Department of Physics and Astronomy
+
+**Geant4 Compatibility: Geant4.10**
 
 The application is written in C++ and uses the GEANT4 simulation toolkit as well as standard
 C++ libraries. This application builds from previous work done by Dario Gigliotti and from the
