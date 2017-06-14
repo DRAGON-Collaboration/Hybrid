@@ -18,7 +18,8 @@ The source code can be compiled using cmake in the standard way most GEANT4 appl
 ```
 mkdir build
 cd build
-cmake -DGEANT4_DIR=$INSTALL_DIR$ $PATH_TO_SOURCE$ make -jn
+cmake -DGEANT4_DIR=$INSTALL_DIR$ $PATH_TO_SOURCE$
+make -jn
 ```
 where `n` is the number of cores you wish to use.
 
@@ -55,9 +56,9 @@ The length of the gas chamber along the beam axis can be set by:
 ```
 The sensitive regions of the gas can be set by three commands:
 ```
-/testem/det/setAnodePosition	//sets the origin of the sensitive region
+/testem/det/setAnodePosition		//sets the origin of the sensitive region
 /testem/det/setAnodeLength		//sets the region length along the beam axis
-/testem/det/setSegmentLength	//divides the length into equal segments with dead regions
+/testem/det/setSegmentLength		   //divides the length into equal segments with dead regions
 								//if the lengths do not divide evenly into the total length.
 ```
 Once detector parameters are set the user should enter the initialized stage.
@@ -72,13 +73,13 @@ As an example, to specify a beam of carbon ions, one may issue the following com
 /gps/particle ion		//specify an ion type projectile
 /gps/ion 6 12 0			//The ion has Z=6	A=12 Q=0
 /gps/ene/type Gauss		//The beam energy spectrum is of gaussian type, each ion is sampled from a Gaussian profile.
-/gps/ene/mono 10 MeV	//The gaussian profile peaks at 10 MeV
-/gps/ene/sigma 1 MeV	//The gaussian profile has a STDEV of 1 MeV
+/gps/ene/mono 10 MeV		  //The gaussian profile peaks at 10 MeV
+/gps/ene/sigma 1 MeV		  //The gaussian profile has a STDEV of 1 MeV
 /gps/pos/type Beam		//Specifies a beam type position distribution
-/gps/pos/sigma_r 2 mm	//Set STDEV in radial of the beam positional profile
+/gps/pos/sigma_r 2 mm				//Set STDEV in radial of the beam positional profile
 /gps/pos/rot1 0 0 1		//Set the 1st vector defining the rotation matrix
-/gps/ang/type beam1d	//Specifies a 1D beam angular distribution
-/gps/ang/sigma 10 mrad	//Set STDEV in the angular distribution
+/gps/ang/type beam1d		  //Specifies a 1D beam angular distribution
+/gps/ang/sigma 10 mrad		  //Set STDEV in the angular distribution
 /gps/ang/rot1 0 0 1
 /run/beamOn 1000		//Begins a run with 1000 events
 ```
