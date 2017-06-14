@@ -3,10 +3,8 @@
 
 Geant4 simulation of the Hybrid Detector for the DRAGON experiment @ TRIUMF
 
-Author: Devin Burke  Email: burkeds@mcmaster.ca
-
+Author: Devin Burke  Email: burkeds@mcmaster.ca=
 McMaster University
-
 Department of Physics and Astronomy
 
 GEANT4 source code for an application simulating a hybrid ionization chamber / double-sided-silicon
