@@ -2,24 +2,25 @@
 # Macro file to run simulation of 12C
 #
 
-/testem/det/setGasMat isobutane10torr
+# /testem/det/setAnodePosition	#sets the origin of the sensitive region
+# /testem/det/setAnodeLength		#sets the region length along the beam axis
+# /testem/det/setSegmentLength    #divides the length into equal segments with dead regions
+#                                 #if the lengths do not divide evenly into the total length.
 
-/testem/det/setAnodePosition	//sets the origin of the sensitive region
-/testem/det/setAnodeLength		//sets the region length along the beam axis
-/testem/det/setSegmentLength    //divides the length into equal segments with dead regions
-                                //if the lengths do not divide evenly into the total length.
+
+/testem/det/setGasMat isobutane10torr
 
 /run/initialize
 
-/gps/particle ion               //specify an ion type projectile
-/gps/ion 6 12 0                 //The ion has Z=6	A=12 Q=0
-/gps/ene/type Gauss             //PDF from which the ion energy is sampled.
-/gps/ene/mono 10 MeV            //Mean energy of ion PDF
-/gps/ene/sigma 1 MeV            //Standard deviation of ion energy PDF
-/gps/pos/type Beam              //Specifies a beam type position distribution
-/gps/pos/sigma_r 2 mm           //Set STDEV in radial of the beam positional profile
-/gps/pos/rot1 0 0 1             //Set the 1st vector defining the rotation matrix
-/gps/ang/type beam1d            //Specifies a 1D beam angular distribution
-/gps/ang/sigma 10 mrad          //Set STDEV of the angular distribution
+/gps/particle ion               #specify an ion type projectile
+/gps/ion 6 12 0                 #The ion has Z=6	A=12 Q=0
+/gps/ene/type Gauss             #PDF from which the ion energy is sampled.
+/gps/ene/mono 10 MeV            #Mean energy of ion PDF
+/gps/ene/sigma 1 MeV            #Standard deviation of ion energy PDF
+/gps/pos/type Beam              #Specifies a beam type position distribution
+/gps/pos/sigma_r 2 mm           #Set STDEV in radial of the beam positional profile
+/gps/pos/rot1 0 0 1             #Set the 1st vector defining the rotation matrix
+/gps/ang/type beam1d            #Specifies a 1D beam angular distribution
+/gps/ang/sigma 10 mrad          #Set STDEV of the angular distribution
 /gps/ang/rot1 0 0 1
-/run/beamOn 1000                //Begins a run with 1000 events
+/run/beamOn 1000                #Begins a run with 1000 events
