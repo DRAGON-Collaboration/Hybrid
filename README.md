@@ -3,17 +3,13 @@
 
 Geant4 simulation of the Hybrid Detector for the DRAGON experiment @ TRIUMF
 
-Author: Devin Burke  Email: burkeds@mcmaster.ca=
-McMaster University
-Department of Physics and Astronomy
+Author: Devin Burke  Email: burkeds@mcmaster.ca<br />
+McMaster University<br />
+Department of Physics and Astronomy<br />
 
-GEANT4 source code for an application simulating a hybrid ionization chamber / double-sided-silicon
-strip detector to operate as a dE vs E detector for heavy ions within astrophysical energy ranges.
+GEANT4 source code for an application simulating a hybrid ionization chamber / double-sided-silicon strip detector to operate as a dE vs E detector for heavy ions within astrophysical energy ranges.
 
-The application is written in C++ and uses the GEANT4 simulation toolkit as well as standard
-C++ libraries. This application builds from previous work done by Dario Gigliotti and from the
-GEANT4 example application TESTEM7.
-The source code can be compiled using cmake in the standard way most GEANT4 applications can be compiled (i.e. - performing an "out of source" build as is described [here](http://geant4.web.cern.ch/geant4/UserDocumentation/UsersGuides/InstallationGuide/html/ch03s02.html)):
+The application is written in C++ and uses the GEANT4 simulation toolkit as well as standard C++ libraries. This application builds from previous work done by Dario Gigliotti and from the GEANT4 example application TESTEM7. The source code can be compiled using cmake in the standard way most GEANT4 applications can be compiled (i.e. - performing an "out of source" build as is described [here](http://geant4.web.cern.ch/geant4/UserDocumentation/UsersGuides/InstallationGuide/html/ch03s02.html)):
 
 ```
 mkdir build
@@ -25,22 +21,17 @@ where `n` is the number of cores you wish to use.
 
 Commands can be entered from the UI or from batch. To run a macro from batch enter:
 ```
-./Si_Ion_Chamber_v8.2 $MACRO$ > $G4cout OUTPUT FILE$
+./Si_Ion_Chamber_v8.2 $MACRO$ > $G4cout_OUTPUT_FILE$
 ```
 To run a macro from the UI use the command:
 ```
 /control/execute $MACRO$
 ```
-The application opens in the pre-initialization stage. Here the user can set detector geometries and material
-types. Type `ls` to see the list of commands.
+The application opens in the pre-initialization stage. Here the user can set detector geometries and material types. Type `ls` to see the list of commands.
 
-App-specific commands are located in the `testem` command directory. Associated help commands can be entered
-to explain their function and a list can be seen in the source code file `DetectorMessenger.cc`. All UI
-commands are defined within their associated messenger source code files.
+App-specific commands are located in the `testem` command directory. Associated help commands can be entered to explain their function and a list can be seen in the source code file `DetectorMessenger.cc`. All UI commands are defined within their associated messenger source code files.
 
-All materials and geometry can be defined from the UI commands provided the materials are defined in
-`DetectorConstruction.cc` with the exception of the DSSSD dead layer which must currently be altered
-in the source code.
+All materials and geometry can be defined from the UI commands provided the materials are defined in `DetectorConstruction.cc` with the exception of the DSSSD dead layer which must currently be altered in the source code.
 
 Isobutane pressure can be set from 1 to 31 torr by entering the command:
 ```
@@ -65,8 +56,7 @@ Once detector parameters are set the user should enter the initialized stage.
 ```
 /run/initialize
 ```
-From here the user can specify the parameters of the general particle source (GPS). The GPS is unaltered
-from the Geant4 tool and the user can see the Geant4 documentation for instruction in its use.
+From here the user can specify the parameters of the general particle source (GPS). The GPS is unaltered from the Geant4 tool and the user can see the Geant4 documentation for instruction in its use.
 
 As an example, to specify a beam of carbon ions, one may issue the following commands:
 ```
@@ -83,12 +73,4 @@ As an example, to specify a beam of carbon ions, one may issue the following com
 /gps/ang/rot1 0 0 1
 /run/beamOn 1000		//Begins a run with 1000 events
 ```
-Simulation results are displayed in the GEANT4 window at the end of the run. Results are also recorded in text
-files within the application directory as well as a ROOT tree.
-Efficiency is calculated and displayed in the GEANT4 window. It is the ratio of event hits to total events.
-In this application an event is considered a hit when the primary event stops within the active region of the DSSSD
-volume.
-
-If you have any questions you can email me. Visualization should work however it crashes sometimes and not others
-and I don't know why. Visualization has a big performance impact and I do not recommend you use it when running
-long simulations.
+Simulation results are displayed in the GEANT4 window at the end of the run. Results are also recorded in text files within the application directory as well as a ROOT tree. Efficiency is calculated and displayed in the GEANT4 window. It is the ratio of event hits to total events. In this application an event is considered a hit when the primary event stops within the active region of the DSSSD volume.
