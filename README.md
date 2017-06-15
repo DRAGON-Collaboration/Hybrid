@@ -60,17 +60,17 @@ From here the user can specify the parameters of the general particle source (GP
 
 As an example, to specify a beam of carbon ions, one may issue the following commands:
 ```
-/gps/particle ion          //specify an ion type projectile
-/gps/ion 6 12 0            //The ion has Z=6	A=12 Q=0
-/gps/ene/type Gauss        //The beam energy spectrum is of gaussian type, each ion is sampled from a Gaussian profile.
-/gps/ene/mono 10 MeV       //The gaussian profile peaks at 10 MeV
-/gps/ene/sigma 1 MeV       //The gaussian profile has a STDEV of 1 MeV
-/gps/pos/type Beam         //Specifies a beam type position distribution
-/gps/pos/sigma_r 2 mm      //Set STDEV in radial of the beam positional profile
-/gps/pos/rot1 0 0 1        //Set the 1st vector defining the rotation matrix
-/gps/ang/type beam1d       //Specifies a 1D beam angular distribution
-/gps/ang/sigma 10 mrad     //Set STDEV in the angular distribution
+/gps/particle ion               //specify an ion type projectile
+/gps/ion 6 12 0                 //The ion has Z=6	A=12 Q=0
+/gps/ene/type Gauss             //PDF from which the ion energy is sampled.
+/gps/ene/mono 10 MeV            //Mean energy of ion PDF
+/gps/ene/sigma 1 MeV            //Standard deviation of ion energy PDF
+/gps/pos/type Beam              //Specifies a beam type position distribution
+/gps/pos/sigma_r 2 mm           //Set STDEV in radial of the beam positional profile
+/gps/pos/rot1 0 0 1             //Set the 1st vector defining the rotation matrix
+/gps/ang/type beam1d            //Specifies a 1D beam angular distribution
+/gps/ang/sigma 10 mrad          //Set STDEV of the angular distribution
 /gps/ang/rot1 0 0 1
-/run/beamOn 1000           //Begins a run with 1000 events
+/run/beamOn 1000                //Begins a run with 1000 events
 ```
 Simulation results are displayed in the GEANT4 window at the end of the run. Results are also recorded in text files within the application directory as well as a ROOT tree. Efficiency is calculated and displayed in the GEANT4 window. It is the ratio of event hits to total events. In this application an event is considered a hit when the primary event stops within the active region of the DSSSD volume.
