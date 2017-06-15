@@ -127,7 +127,7 @@ void HistoManager::book()
     return;
   }
 
-  ntupl = new TTree("101", "Event Data");
+  ntupl = new TTree("t101", "Event Data");
   ntupl->Branch("GasName", &GasName, "GasName/D");
   ntupl->Branch("EventEnergy", &EventEnergy, "EventEnergy/D");
   ntupl->Branch("EdepWindow" , &EdepWindow, "EdepWindow/D");
@@ -156,9 +156,9 @@ void HistoManager::book()
   ntupl->Branch("PositionZ", &PositionZ, "PositionZ/D");
 
   // 2-D Histos
-  histo2[1] = new TH2D("1_2D", "YZ Position of Particle on DSSSD", 100,
+  histo2[1] = new TH2D("h2_1", "YZ Position of Particle on DSSSD", 100,
                -5.0*CLHEP::cm, 5.0*CLHEP::cm, 100, -5.0*CLHEP::cm, 5.0*CLHEP::cm);
-  histo2[2] = new TH2D("2_2D", "Edep vs E", 1000, 0, 200*CLHEP::MeV, 1000, 0, 100*CLHEP::MeV);
+  histo2[2] = new TH2D("h2_2", "Edep vs E", 1000, 0, 200*CLHEP::MeV, 1000, 0, 100*CLHEP::MeV);
 
   G4cout << "\n-----> Histogram file is opened in " << fileName << G4endl;
 }
