@@ -71,6 +71,17 @@
 # To superimpose all of the events from a given run:
 /vis/scene/endOfEventAction accumulate
 #
+
+# To get nice view
+# Make the "World" box invisible
+/vis/geometry/set/visibility World 0 false
+# Set colors of components of Hybrid detector
+/vis/geometry/set/colour DSSSD 1. 0. 0. 1
+/vis/geometry/set/colour AnodeSegment 0.722 0.451 0.20 1.0
+/vis/geometry/set/colour Window 0. 1. 1. 1
+
+/vis/viewer/set/style wireframe
+
 # Re-establish auto refreshing and verbosity:
 /vis/viewer/set/autoRefresh true
 /vis/verbose warnings

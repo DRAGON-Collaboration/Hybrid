@@ -31,7 +31,13 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+
+#ifdef G4MULTITHREADED
+#include "G4MTRunManager.hh"
+#else
 #include "G4RunManager.hh"
+#endif
+
 #include "G4UImanager.hh"
 #include "Randomize.hh"
 
@@ -114,6 +120,7 @@ int main(int argc,char** argv)
 
 #ifdef G4UI_USE
       G4UIExecutive * ui = new G4UIExecutive(argc,argv);
+      UI->ApplyCommand("/control/execute init_vis.mac");
       ui->SessionStart();
       delete ui;
 #endif

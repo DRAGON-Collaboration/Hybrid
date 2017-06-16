@@ -49,6 +49,7 @@ target_link_libraries(Si_Ion_Chamber_v8 ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 # relies on these scripts being in the current working directory.
 #
 set(Si_Ion_Chamber_v8_SCRIPTS
+  init_vis.mac
   vis.mac
   c12.mac
   )
