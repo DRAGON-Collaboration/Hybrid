@@ -355,7 +355,7 @@ void HistoManager::EndOfRun(G4ParticleDefinition* particle)
 
   a = PCAa(CovMatrix, EdepGasVector, EdepDSSSDVector);
   b = PCAb(CovMatrix, EdepGasVector, EdepDSSSDVector);
-  for (int s; s < nSegments; s++)
+  for (int s = 0; s < nSegments; s++)
   {
       CovMatrix[0][0] = Covariance(EdepDSSSDVector, EdepDSSSDVector,1);
       CovMatrix[0][1] = Covariance(EdepDSSSDVector, EdepSegmentVector[s],1);

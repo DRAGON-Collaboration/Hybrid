@@ -23,7 +23,7 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file electromagnetic/TestEm7/src/StepMaxMessenger.cc
+/// \file electromagnetic/Si_Ion_Chamber_v7/src/StepMaxMessenger.cc
 /// \brief Implementation of the StepMaxMessenger class
 //
 // $Id: StepMaxMessenger.cc 67268 2013-02-13 11:38:40Z ihrivnac $
@@ -35,17 +35,19 @@
 
 #include "StepMax.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
+#include "globals.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 StepMaxMessenger::StepMaxMessenger(StepMax* stepM)
-:G4UImessenger(),fStepMax(stepM),fStepMaxCmd(0)
-{
-  fStepMaxCmd = new G4UIcmdWithADoubleAndUnit("/testem/stepMax",this);
+  :G4UImessenger(),fStepMax(stepM),fStepMaxCmd(0)
+{ 
+  fStepMaxCmd = new G4UIcmdWithADoubleAndUnit("/testem/stepmax",this);
   fStepMaxCmd->SetGuidance("Set max allowed step length");
   fStepMaxCmd->SetParameterName("mxStep",false);
   fStepMaxCmd->SetRange("mxStep>0.");
   fStepMaxCmd->SetUnitCategory("Length");
+  fStepMaxCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -58,7 +60,7 @@ StepMaxMessenger::~StepMaxMessenger()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void StepMaxMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
-{
+{ 
   if (command == fStepMaxCmd)
     { fStepMax->SetMaxStep(fStepMaxCmd->GetNewDoubleValue(newValue));}
 }

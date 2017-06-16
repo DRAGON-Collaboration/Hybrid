@@ -23,10 +23,10 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file electromagnetic/TestEm7/include/StepMaxMessenger.hh
+/// \file electromagnetic/Si_Ion_Chamber_v7/include/StepMaxMessenger.hh
 /// \brief Definition of the StepMaxMessenger class
 //
-// $Id: StepMaxMessenger.hh 66241 2012-12-13 18:34:42Z gunter $
+// $Id: StepMaxMessenger.hh 67268 2013-02-13 11:38:40Z ihrivnac $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -44,15 +44,16 @@ class G4UIcmdWithADoubleAndUnit;
 
 class StepMaxMessenger: public G4UImessenger
 {
-  public:
-    StepMaxMessenger(StepMax*);
-   ~StepMaxMessenger();
+public:
 
-    virtual void SetNewValue(G4UIcommand*, G4String);
+  StepMaxMessenger(StepMax*);
+  ~StepMaxMessenger();
 
-  private:
-    StepMax* fStepMax;
-    G4UIcmdWithADoubleAndUnit* fStepMaxCmd;
+  virtual void SetNewValue(G4UIcommand*, G4String);
+
+private:
+  StepMax* fStepMax;
+  G4UIcmdWithADoubleAndUnit* fStepMaxCmd;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
