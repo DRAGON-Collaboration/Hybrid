@@ -21,7 +21,7 @@ where `n` is the number of cores you wish to use.
 
 Commands can be entered from the UI or from batch. To run a macro from batch enter:
 ```
-./Si_Ion_Chamber_v8.2 $MACRO$ > $G4cout_OUTPUT_FILE$
+./Hybrid $MACRO$ > $G4cout_OUTPUT_FILE$
 ```
 To run a macro from the UI use the command:
 ```

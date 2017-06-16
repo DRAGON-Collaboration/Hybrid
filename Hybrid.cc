@@ -23,10 +23,10 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file electromagnetic/Si_Ion_Chamber_v7/Si_Ion_Chamber_v7.cc
-/// \brief Main program of the electromagnetic/Si_Ion_Chamber_v7 example
+/// \file electromagnetic/Hybrid/Hybrid.cc
+/// \brief Main program of the electromagnetic/Hybrid example
 //
-// $Id: Si_Ion_Chamber_v7.cc 67235 2013-02-08 16:34:49Z vnivanch $
+// $Id: Hybrid.cc 67235 2013-02-08 16:34:49Z vnivanch $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
