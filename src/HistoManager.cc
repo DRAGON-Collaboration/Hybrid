@@ -75,7 +75,7 @@ HistoManager* HistoManager::GetPointer()
   return fManager;
 }
 
-HistoManager::HistoManager() : rootFile(0)
+HistoManager::HistoManager() : file0(0)
 {
   fileName = "Si_Ion_v8.root";
 
@@ -83,8 +83,8 @@ HistoManager::HistoManager() : rootFile(0)
 
   // fMessenger = new HistoMessenger(this);
   RunHeaderFlag = 0;
-  //ntupl
-  ntupl = 0;
+  //t1
+  t1 = 0;
 
   EdepWindow = 0.;
   EdepDSSSD = 0.;
@@ -111,37 +111,37 @@ HistoManager::HistoManager() : rootFile(0)
 HistoManager::~HistoManager()
 {
   delete fMessenger;
-  if (rootFile ) delete rootFile;
+  if (file0 ) delete file0;
 }
 
 void HistoManager::book()
 {
-  //Creating a tree container to handle histograms and ntuples
+  //Creating a tree container to handle histograms and t1es
   //This tree is associated to an output file
 
-  rootFile = new TFile(fileName,"RECREATE");
-  if(!rootFile) {
+  file0 = new TFile(fileName,"RECREATE");
+  if(!file0) {
     G4cout << " HistoManager::book :"
        << " problem creating the ROOT TFile "
        << G4endl;
     return;
   }
 
-  ntupl = new TTree("t101", "Event Data");
-  ntupl->Branch("GasName", &GasName, "GasName/D");
-  ntupl->Branch("EventEnergy", &EventEnergy, "EventEnergy/D");
-  ntupl->Branch("EdepWindow" , &EdepWindow, "EdepWindow/D");
-  ntupl->Branch("EdepDSSSD", &EdepDSSSD, "EdepDSSSD/D");
-  ntupl->Branch("EdepGas", &EdepGas, "EdepGas/D");
-  ntupl->Branch("IonPair", &IonPair, "IonPair/D");
-  ntupl->Branch("EventRange", &EventRange, "EventRange/D");
+  t1 = new TTree("t1", "Event Data");
+  t1->Branch("GasName", &GasName, "GasName/D");
+  t1->Branch("EventEnergy", &EventEnergy, "EventEnergy/D");
+  t1->Branch("EdepWindow" , &EdepWindow, "EdepWindow/D");
+  t1->Branch("EdepDSSSD", &EdepDSSSD, "EdepDSSSD/D");
+  t1->Branch("EdepGas", &EdepGas, "EdepGas/D");
+  t1->Branch("IonPair", &IonPair, "IonPair/D");
+  t1->Branch("EventRange", &EventRange, "EventRange/D");
   for (int i = 0; i < nSegments; i++)
     {
       G4String SegmentString = "EdepSegment";
       G4int n = i+1;
       G4String SegmentNumberString = G4UIcommand::ConvertToString(n);
       SegmentString += SegmentNumberString;
-      ntupl->Branch(SegmentString, &EdepSegment[i], "EdepSegment/D");
+      t1->Branch(SegmentString, &EdepSegment[i], "EdepSegment/D");
     }
   for (int i = 0; i < nSegments; i++)
     {
@@ -149,25 +149,25 @@ void HistoManager::book()
       G4int n = i+1;
       G4String SegmentNumberString = G4UIcommand::ConvertToString(n);
       SegmentString += SegmentNumberString;
-      ntupl->Branch(SegmentString, &SegIons[i], "SegIons/D");
+      t1->Branch(SegmentString, &SegIons[i], "SegIons/D");
     }
-  ntupl->Branch("PositionX", &PositionX, "PositionX/D");
-  ntupl->Branch("PositionY", &PositionY, "PositionY/D");
-  ntupl->Branch("PositionZ", &PositionZ, "PositionZ/D");
+  t1->Branch("PositionX", &PositionX, "PositionX/D");
+  t1->Branch("PositionY", &PositionY, "PositionY/D");
+  t1->Branch("PositionZ", &PositionZ, "PositionZ/D");
 
   // 2-D Histos
-  histo2[1] = new TH2D("h2_1", "YZ Position of Particle on DSSSD", 100,
+  histo2[0] = new TH2D("h20", "YZ Position of Particle on DSSSD", 100,
                -5.0*CLHEP::cm, 5.0*CLHEP::cm, 100, -5.0*CLHEP::cm, 5.0*CLHEP::cm);
-  histo2[2] = new TH2D("h2_2", "Edep vs E", 1000, 0, 200*CLHEP::MeV, 1000, 0, 100*CLHEP::MeV);
+  histo2[1] = new TH2D("h21", "Edep vs E", 1000, 0, 200*CLHEP::MeV, 1000, 0, 100*CLHEP::MeV);
 
   G4cout << "\n-----> Histogram file is opened in " << fileName << G4endl;
 }
 
 void HistoManager::save()
 {
-  if (rootFile) {
-    rootFile->Write();       // Writing the histograms to the file
-    rootFile->Close();        // and closing the tree (and the file)
+  if (file0) {
+    file0->Write();       // Writing the histograms to the file
+    file0->Close();        // and closing the tree (and the file)
     G4cout << "\n----> Histogram Tree is saved \n" << G4endl;
   }
 }
@@ -230,8 +230,8 @@ void HistoManager::EndOfEvent(PrimaryGeneratorAction* fPrimary)
     EventEnergy = fPrimary->GetParticleGun()->GetParticleEnergy()/CLHEP::MeV;
 
   if (totStepLengthVector[EventCounter-1]) EventRange = totStepLengthVector[EventCounter-1];
-  //Increments root ntupl with event values
-  if (ntupl) ntupl->Fill();
+  //Increments root t1 with event values
+  if (t1) t1->Fill();
 
   //Records X and Y position of the end of the particle track
   if ( (std::abs(PositionY) <= DSSSDDetectorSizeYZ/2)&&(std::abs(PositionZ) <= DSSSDDetectorSizeYZ/2) )
@@ -492,7 +492,7 @@ void HistoManager::SetPosition(G4double Xpos, G4double Ypos, G4double Zpos)
 //Allows declaration/renaming of new root file between runs using HistoMessenger
 void HistoManager::SetRootFile(G4String file)
 {
-  if (rootFile) delete rootFile;
+  if (file0) delete file0;
   fileName = file;
 }
 

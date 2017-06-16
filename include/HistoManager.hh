@@ -116,8 +116,8 @@ public:
 private:
   G4String fileName;
   static HistoManager* fManager;
-  TFile* rootFile;
-  TTree* ntupl;
+  TFile* file0;
+  TTree* t1;
   HistoMessenger* fMessenger;
   G4int EventCounter;
   TH2D* histo2[Max2Histo];
