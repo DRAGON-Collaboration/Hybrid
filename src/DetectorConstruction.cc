@@ -73,31 +73,31 @@ DetectorConstruction::DetectorConstruction()
   fSolidWorld(0),fLogicWorld(0),fPhysiWorld(0),fWorldMaterial(0),fRegGasDet(0),fGasDetectorCuts(0),fTargetSD(0), fDefaultWorld(true)
 {
   //Define Detector Geometry
-  fDSSSDActiveThickness = 300*um;
-  fDSSSDDetectorSizeYZ = 49.5*mm;
-  fDSSSDActiveSizeZ = fDSSSDDetectorSizeYZ; // active silicon width
+  fDSSSDActiveThickness    = 300*um;
+  fDSSSDDetectorSizeYZ     = 49.5*mm;
+  fDSSSDActiveSizeZ        = fDSSSDDetectorSizeYZ; // active silicon width
   fDSSSDDeadlayerThickness = 0.4*um;
-  fWindowThickness = 0.5*um;
-  fWindowSizeYZ   = 5.0*cm;
-  fXposWindow      = 0.0*cm;
-  fGasThickness = 30.0*cm;
-  fGasSizeYZ    = 10.0*cm;
-  fXposGas           = 0.0*cm;
+  fWindowThickness         = 0.5*um;
+  fWindowSizeYZ            = 5.0*cm;
+  fXposWindow              = 0.0*cm;
+  fGasThickness            = 10.8*cm;
+  fGasSizeYZ               = 10.0*cm;
+  fXposGas                 = 0.0*cm;
   ComputeCalorParameters();
 
    //Anode Geometry
   fAnodeX = fGasThickness;
   fAnodePosition = 0; //Anode size and position can be set from DetectorMessenger
-  fSegmentX = fGasThickness/10; //Segment width can be set from DetectorMessenger
+  fSegmentX = fGasThickness/11; //Segment width can be set from DetectorMessenger
 
   // materials
   DefineMaterials();
   SetWorldMaterial("Galactic");
   SetGasMaterial("isobutane10torr");
   SetWindowMaterial("G4_MYLAR");
-  fDSSSDActiveMaterial = G4Material::GetMaterial("Silicon");
+  fDSSSDActiveMaterial    = G4Material::GetMaterial("Silicon");
   fDSSSDDeadlayerMaterial = G4Material::GetMaterial("Aluminium");
-  fDSSSDDetectorMaterial = G4Material::GetMaterial("Galactic");
+  fDSSSDDetectorMaterial  = G4Material::GetMaterial("Galactic");
 
   // create commands for interactive definition of the calorimeter
   fDetectorMessenger = new DetectorMessenger(this);

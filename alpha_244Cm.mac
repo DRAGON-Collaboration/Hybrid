@@ -1,0 +1,15 @@
+#
+# Macro file to run simulation of monoenergetic alphas
+#
+
+/testem/det/setGasMat isobutane4torr
+/testem/det/setWinThick 1.5 um
+
+/gps/particle ion               #specify an ion type projectile
+/gps/ion 2 4 2                  #The ion has Z=6 A=12 Q=2
+/gps/pos/centre -20 0 0         #X Y Z coordinates of the source
+/gps/ene/type Mono              #PDF from which the ion energy is sampled.
+/gps/ene/mono 5.80477 MeV       #Mean energy of ion PDF
+/gps/pos/type Point             #Specifies a beam type position distribution
+/gps/pos/rot1 0 0 1             #Set the 1st vector defining the rotation matrix
+/run/beamOn 100                 #Begins a run with n events

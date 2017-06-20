@@ -34,7 +34,7 @@
 /vis/viewer/set/style wireframe
 #
 # Draw coordinate axes:
-/vis/scene/add/axes 0 0 0 1 m
+/vis/scene/add/axes 0 0 0 10 cm
 #
 # Draw smooth trajectories at end of event, showing trajectory points
 # as markers 2 pixels wide:
@@ -68,11 +68,19 @@
 # Make the "World" box invisible
 /vis/geometry/set/visibility World 0 false
 # Set colors of components of Hybrid detector
-/vis/geometry/set/colour DSSSD 1. 0. 0. 1
+/vis/geometry/set/colour DSSSDDetector 0. 0. 1. 1.0
+/vis/geometry/set/colour DSSSDActive 0. 0. 1. 1.0
+/vis/geometry/set/colour DSSSDDead 0.3 0.3 0.3 1.0
 /vis/geometry/set/colour AnodeSegment 0.722 0.451 0.20 1.0
 /vis/geometry/set/colour Window 0. 1. 1. 1
 
 /vis/viewer/set/style wireframe
+
+# Dimensions from Rob Henderson's drawings
+/testem/det/setGasThick 108 mm
+# /testem/det/setAnodePosition          #sets the origin of the sensitive region
+/testem/det/setAnodeLength 108 mm		#sets the region length along the beam axis
+/testem/det/setSegmentLength 9.8 mm     #divides the length into equal segments with dead regions if the lengths do not divide evenly into the total length.
 
 # Re-establish auto refreshing and verbosity:
 /vis/viewer/set/autoRefresh true
