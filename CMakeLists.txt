@@ -52,7 +52,7 @@ set(Hybrid_SCRIPTS
   init_vis.mac
   vis.mac
   c12.mac
-  alpha.mac
+  alpha_244Cm.mac
   )
 
 foreach(_script ${Hybrid_SCRIPTS})
