@@ -70,7 +70,7 @@
 # Set colors of components of Hybrid detector
 /vis/geometry/set/colour DSSSDDetector 0. 0. 1. 1.0
 /vis/geometry/set/colour DSSSDActive 0. 0. 1. 1.0
-/vis/geometry/set/colour DSSSDDead 0.3 0.3 0.3 1.0
+/vis/geometry/set/colour DSSSDDeadlayer 0.3 0.3 0.3 1.0
 /vis/geometry/set/colour AnodeSegment 0.722 0.451 0.20 1.0
 /vis/geometry/set/colour Window 0. 1. 1. 1
 
