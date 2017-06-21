@@ -34,8 +34,18 @@
 #ifndef DetectorMessenger_h
 #define DetectorMessenger_h 1
 
+#include "DetectorConstruction.hh"
+
+#include "G4UIdirectory.hh"
+#include "G4UIcmdWithAString.hh"
+#include "G4UIcmdWithAnInteger.hh"
+#include "G4UIcmdWithADoubleAndUnit.hh"
+#include "G4UIcmdWithoutParameter.hh"
+#include "G4UIcmdWithADouble.hh"
 #include "G4UImessenger.hh"
 #include "globals.hh"
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class DetectorConstruction;
 class G4UIdirectory;
@@ -65,7 +75,8 @@ class DetectorMessenger: public G4UImessenger
 
     G4UIcmdWithADoubleAndUnit* fWinThickCmd;
 
-    G4UIcmdWithADouble*        fGasPressCmd;
+    G4UIcmdWithADoubleAndUnit* fGasPressCmd;
+    G4UIcmdWithADoubleAndUnit* fGasTempCmd;
     G4UIcmdWithADoubleAndUnit* fGasThickCmd;
     G4UIcmdWithADoubleAndUnit* fGasSizYZCmd;
     G4UIcmdWithADoubleAndUnit* fGasSizYZCmd;

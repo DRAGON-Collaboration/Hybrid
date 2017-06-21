@@ -43,10 +43,10 @@
 #include "G4NistManager.hh"
 #include "G4Material.hh"
 #include "TargetSD.hh"
+#include "DetectorMessenger.hh"
 
 #include "G4PhysicalConstants.hh"
 #include "G4SystemOfUnits.hh"
-
 
 class G4Box;
 class G4Material;
@@ -72,32 +72,30 @@ public:
 
 public:
 
-  void SetWindowMaterial (G4String);
+  void SetWindowMaterial(G4String);
   void SetWindowThickness(G4double);
 
   // void SetGasMaterial (G4Material*);
   void SetGasMaterial(G4String);
   void SetGasPressure(G4double);
+  void SetGasTemperature(G4double);
   void SetGasThickness(G4double);
-  void SetGasSizeYZ   (G4double);
-
+  void SetGasSizeYZ(G4double);
   void SetGasXpos(G4double);
 
   void SetWorldMaterial(G4String);
-  void SetWorldSizeX   (G4double);
-  void SetWorldSizeYZ  (G4double);
+  void SetWorldSizeYZ(G4double);
+  void SetWorldSizeX(G4double);
 
   void SetAnodePosition(G4double);
-  void SetAnodeLength  (G4double);
   void SetSegmentLength(G4double);
+  void SetAnodeLength(G4double);
   // void SetMagField(G4double);
 
   virtual G4VPhysicalVolume* Construct();
   //virtual void ConstructField();
   void SetPairEnergy(G4double);
   void UpdateGeometry();
-
-  void SetGasPressure(G4double);
 
   void PrintCalorParameters();
 
@@ -107,6 +105,7 @@ public:
 
   G4Material* GetGasMaterial()      {return fGasMaterial;};
   G4double    GetGasPressure()      {return fGasPressure;};
+  G4double    GetGasTemperature()   {return fGasTemperature;};
   G4double    GetGasThickness()     {return fGasThickness;};
   G4double    GetGasSizeYZ()        {return fGasSizeYZ;};
 
@@ -189,10 +188,10 @@ private:
   G4Box*             fSolidWindow;
   G4LogicalVolume*   fLogicWindow;
   G4VPhysicalVolume* fPhysiWindow;
-  G4Material*	fWindowMaterial;
-  G4double       fWindowThickness;
-  G4double		fWindowSizeYZ;
-  G4double		fXposWindow;
+  G4Material*	     fWindowMaterial;
+  G4double           fWindowThickness;
+  G4double		     fWindowSizeYZ;
+  G4double		     fXposWindow;
 
   // Ionization Gas
   G4Box*             fSolidGas;
@@ -200,6 +199,7 @@ private:
   G4VPhysicalVolume* fPhysiGas;
   G4Material*        fGasMaterial;
   G4double           fGasPressure;
+  G4double           fGasTemperature;
   G4double           fGasThickness;
   G4double           fGasSizeYZ;
   G4double           fXposGas;
@@ -225,8 +225,8 @@ private:
   G4LogicalVolume*   fLogicWorld;
   G4VPhysicalVolume* fPhysiWorld;
   G4Material*        fWorldMaterial;
-  G4Region* fRegGasDet; //Required for PAI model
-  G4ProductionCuts* fGasDetectorCuts; //Required for PAI model
+  G4Region*          fRegGasDet; //Required for PAI model
+  G4ProductionCuts*  fGasDetectorCuts; //Required for PAI model
   TargetSD*          fTargetSD;
   G4double           fWorldSizeX;
   G4double           fWorldSizeYZ;

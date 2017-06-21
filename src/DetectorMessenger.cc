@@ -33,19 +33,11 @@
 
 #include "DetectorMessenger.hh"
 
-#include "DetectorConstruction.hh"
-#include "G4UIdirectory.hh"
-#include "G4UIcmdWithAString.hh"
-#include "G4UIcmdWithAnInteger.hh"
-#include "G4UIcmdWithADoubleAndUnit.hh"
-#include "G4UIcmdWithoutParameter.hh"
-#include "G4UIcmdWithADouble.hh"
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
-  :G4UImessenger(), fTestemDir(0), fDetDir(0), fWinMaterCmd(0), fGasMaterCmd(0), fWinThickCmd(0),
-   fGasThickCmd(0), fGasSizYZCmd(0), fGasXposCmd(0), fWorldMaterCmd(0),
+  :G4UImessenger(), fTestemDir(0), fDetDir(0), fWinMaterCmd(0), fWinThickCmd(0), fGasMaterCmd(0),
+   fGasPressCmd(0), fGasTempCmd(0), fGasThickCmd(0), fGasSizYZCmd(0), fGasXposCmd(0), fWorldMaterCmd(0),
    fWorldXCmd(0), fWorldYZCmd(0), fUpdateCmd(0),
    fIonCmd(0), fDetector(Det), fAnodePosCmd(0), fAnodeLengthCmd(0),
    fSegmentLengthCmd(0)
@@ -78,10 +70,19 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   fWinThickCmd->SetUnitCategory("Length");
   fWinThickCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  fGasPressCmd = new G4UIcmdWithADouble ("/testem/det/setGasPress",this);
+  fGasPressCmd = new G4UIcmdWithADoubleAndUnit ("/testem/det/setGasPress",this);
   fGasPressCmd->SetGuidance("Select Pressure of the Gas.");
   fGasPressCmd->SetParameterName("Press",false);
+  fGasPressCmd->SetUnitCategory("Pressure");
   fGasPressCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  fGasPressCmd->SetRange("fGasPress>0.");
+
+  fGasTempCmd = new G4UIcmdWithADoubleAndUnit ("/testem/det/setGasTemp",this);
+  fGasTempCmd->SetGuidance("Select Temperature of the Gas.");
+  fGasTempCmd->SetParameterName("Temperature",false);
+  fGasTempCmd->SetUnitCategory("Temperature");
+  fGasTempCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  fGasTempCmd->SetRange("fGasTemp>0.");
 
   fGasThickCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setGasThick",this);
   fGasThickCmd->SetGuidance("Set Thickness of the Gas");
@@ -162,6 +163,7 @@ DetectorMessenger::~DetectorMessenger()
   delete fGasThickCmd;
   delete fGasSizYZCmd;
   delete fGasPressCmd;
+  delete fGasTempCmd;
   delete fGasXposCmd;
   delete fWorldMaterCmd;
   delete fWorldXCmd;
@@ -180,32 +182,35 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
   if (command == fWinMaterCmd)
     {fDetector->SetWindowMaterial(newValue);}
 
-  if ( command == fGasMaterCmd )
-   {fDetector->SetGasMaterial(newValue);}
+  if ( command == fWinThickCmd )
+    {fDetector->SetWindowThickness(fWinThickCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fWorldMaterCmd )
-   {fDetector->SetWorldMaterial(newValue);}
+    {fDetector->SetWorldMaterial(newValue);}
+
+  if ( command == fGasMaterCmd )
+    {fDetector->SetGasMaterial(newValue);}
 
   if ( command == fGasPressCmd )
-    {fDetector->SetGasPressure(fGasThickCmd->GetNewDoubleValue(newValue));}
+    {fDetector->SetGasPressure(fGasPressCmd->GetNewDoubleValue(newValue));}
+
+  if ( command == fGasTempCmd )
+    {fDetector->SetGasTemperature(fGasTempCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fGasThickCmd )
     {fDetector->SetGasThickness(fGasThickCmd->GetNewDoubleValue(newValue));}
 
-  if ( command == fWinThickCmd )
-  {fDetector->SetWindowThickness(fWinThickCmd->GetNewDoubleValue(newValue));}
-
   if ( command == fGasSizYZCmd )
-   {fDetector->SetGasSizeYZ(fGasSizYZCmd->GetNewDoubleValue(newValue));}
+    {fDetector->SetGasSizeYZ(fGasSizYZCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fGasXposCmd )
-   {fDetector->SetGasXpos(fGasXposCmd->GetNewDoubleValue(newValue));}
+    {fDetector->SetGasXpos(fGasXposCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fWorldXCmd )
-   {fDetector->SetWorldSizeX(fWorldXCmd->GetNewDoubleValue(newValue));}
+    {fDetector->SetWorldSizeX(fWorldXCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fWorldYZCmd )
-   {fDetector->SetWorldSizeYZ(fWorldYZCmd->GetNewDoubleValue(newValue));}
+    {fDetector->SetWorldSizeYZ(fWorldYZCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fAnodePosCmd )
     {fDetector->SetAnodePosition(fAnodePosCmd->GetNewDoubleValue(newValue));}
@@ -217,12 +222,11 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
     {fDetector->SetSegmentLength(fSegmentLengthCmd->GetNewDoubleValue(newValue));}
 
   if  ( command == fUpdateCmd )
-   {fDetector->UpdateGeometry(); }
+    {fDetector->UpdateGeometry();}
 
   if ( command == fIonCmd )
-    {
-      fDetector->SetPairEnergy(fIonCmd->GetNewDoubleValue(newValue));
-    }
+    {fDetector->SetPairEnergy(fIonCmd->GetNewDoubleValue(newValue));}
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

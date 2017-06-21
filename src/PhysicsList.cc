@@ -32,7 +32,6 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "PhysicsList.hh"
-#include "PhysicsListMessenger.hh"
 
 // #include "PhysListEmStandard.hh"
 // #include "PhysListEmStandardNR.hh"
@@ -64,8 +63,6 @@
 #include "G4ProcessManager.hh"
 #include "G4Decay.hh"
 
-#include "StepMax.hh"
-
 #include "G4IonFluctuations.hh"
 #include "G4IonParametrisedLossModel.hh"
 #include "G4UniversalFluctuation.hh"
@@ -87,6 +84,11 @@ PhysicsList::PhysicsList() : G4VModularPhysicsList(),
 
   // protected member of the base class
   verboseLevel = 1;
+
+  const G4double Torr    = 1/760.*atmosphere;
+  const G4double Celsius = 273.15 + kelvin;
+  new G4UnitDefinition("Torr", "Torr", "Pressure", Torr);
+  new G4UnitDefinition("Celsius", "Celsius", "Temperature", Celsius);
 
   fMessenger = new PhysicsListMessenger(this);
 

@@ -32,13 +32,13 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "DetectorConstruction.hh"
-#include "DetectorMessenger.hh"
+
+//#include "PhysicsList.cc"
 #include "TargetSD.hh"
 #include "G4SDManager.hh"
 #include "F02ElectricFieldSetup.hh"
 
 #include "G4Box.hh"
-#include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4PVReplica.hh"
 #include "G4UniformMagField.hh"
@@ -76,7 +76,8 @@ DetectorConstruction::DetectorConstruction()
   fWindowThickness         = 0.5*um;
   fWindowSizeYZ            = 5.0*cm;
   fXposWindow              = 0.0*cm;
-  fGasPressure             = 10.0;
+  fGasPressure             = 10.0*Torr;
+  fGasTemperature          = 25.0*Celsius;
   fGasThickness            = 10.8*cm;
   fGasSizeYZ               = 10.0*cm;
   fXposGas                 = 0.0*cm;
@@ -90,7 +91,7 @@ DetectorConstruction::DetectorConstruction()
   // materials
   DefineMaterials();
   SetWorldMaterial("Galactic");
-  SetGasMaterial("isobutane10torr");
+  SetGasMaterial("isobutane");
   SetWindowMaterial("G4_MYLAR");
   fDSSSDActiveMaterial    = G4Material::GetMaterial("Silicon");
   fDSSSDDeadlayerMaterial = G4Material::GetMaterial("Aluminium");
@@ -276,14 +277,18 @@ void DetectorConstruction::DefineMaterials()
   steam->GetIonisation()->SetMeanExcitationEnergy(71.6*eV);
 
   //Isobutane definitions
-  G4double IsobutaneTemperature = 273.15*kelvin;
+  G4double IsobutaneTemperature;
   G4double IsobutaneDensity;
   G4double IsobutanePressure;
 
-  IsobutanePressure = fGasPressure/760.*atmosphere;
-  IsobutaneDensity = 0.00341*mg/cm3;
+  IsobutaneMolarMass = 52.18e-3*kg/mol;
+  IsobutanePressure  = fGasTemperature;
+  IsobutanePressure  = fGasPressure;
+  IsobutaneDensity   = k_Boltzmann*Avogadro*eplus*1e-6*IsobutaneMolarMass*fGasPressure / fGasTemperature; //0.00341*mg/cm3;
 
-  G4Material* Isobutane = new G4Material(name = "Isobutane", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
+  G4Material* Isobutane =
+    new G4Material(name = "Isobutane", IsobutaneDensity, ncomponents = 2,
+                   kStateGas, fGasTemperature, fGasPressure);
   Isobutane-> AddElement(C,4);
   Isobutane-> AddElement(H,10);
   Isobutane-> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
@@ -626,8 +631,14 @@ void DetectorConstruction::SetWindowThickness(G4double val)
 void DetectorConstruction::SetGasPressure(G4double val)
 {
   fGasPressure = val;
-  fAnodeX = fGasThickness;
-  fSegmentX = fGasThickness/10;
+  G4RunManager::GetRunManager()->GeometryHasBeenModified();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void DetectorConstruction::SetGasTemperature(G4double val)
+{
+  fGasTemperature = val;
   G4RunManager::GetRunManager()->GeometryHasBeenModified();
 }
 
