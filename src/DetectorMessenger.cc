@@ -78,6 +78,11 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   fWinThickCmd->SetUnitCategory("Length");
   fWinThickCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  fGasPressCmd = new G4UIcmdWithADouble ("/testem/det/setGasPress",this);
+  fGasPressCmd->SetGuidance("Select Pressure of the Gas.");
+  fGasPressCmd->SetParameterName("Press",false);
+  fGasPressCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   fGasThickCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setGasThick",this);
   fGasThickCmd->SetGuidance("Set Thickness of the Gas");
   fGasThickCmd->SetParameterName("SizeZ",false);
@@ -156,6 +161,7 @@ DetectorMessenger::~DetectorMessenger()
   delete fGasMaterCmd;
   delete fGasThickCmd;
   delete fGasSizYZCmd;
+  delete fGasPressCmd;
   delete fGasXposCmd;
   delete fWorldMaterCmd;
   delete fWorldXCmd;
@@ -180,8 +186,11 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
   if ( command == fWorldMaterCmd )
    {fDetector->SetWorldMaterial(newValue);}
 
+  if ( command == fGasPressCmd )
+    {fDetector->SetGasPressure(fGasThickCmd->GetNewDoubleValue(newValue));}
+
   if ( command == fGasThickCmd )
-  {fDetector->SetGasThickness(fGasThickCmd->GetNewDoubleValue(newValue));}
+    {fDetector->SetGasThickness(fGasThickCmd->GetNewDoubleValue(newValue));}
 
   if ( command == fWinThickCmd )
   {fDetector->SetWindowThickness(fWinThickCmd->GetNewDoubleValue(newValue));}

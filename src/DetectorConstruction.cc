@@ -37,7 +37,6 @@
 #include "G4SDManager.hh"
 #include "F02ElectricFieldSetup.hh"
 
-#include "G4Material.hh"
 #include "G4Box.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
@@ -54,13 +53,10 @@
 #include "G4ProductionCuts.hh"
 
 #include "G4UnitsTable.hh"
-#include "G4NistManager.hh"
 #include "G4RunManager.hh"
 #include "G4AutoDelete.hh"
 //#include "SegParameterisation.hh"
 
-#include "G4PhysicalConstants.hh"
-#include "G4SystemOfUnits.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -80,6 +76,7 @@ DetectorConstruction::DetectorConstruction()
   fWindowThickness         = 0.5*um;
   fWindowSizeYZ            = 5.0*cm;
   fXposWindow              = 0.0*cm;
+  fGasPressure             = 10.0;
   fGasThickness            = 10.8*cm;
   fGasSizeYZ               = 10.0*cm;
   fXposGas                 = 0.0*cm;
@@ -131,8 +128,8 @@ void DetectorConstruction::DefineMaterials()
 {
   //This function illustrates the possible ways to define materials
 
-  G4String symbol, name;             //a=mass of a mole;
-  G4double a, z, density;      //z=mean number of protons;
+  G4String symbol, name;             //a  = molar mass;
+  G4double a, z, density;            //z=mean number of protons;
 
   G4int ncomponents, natoms;
   G4double fractionmass;
@@ -250,7 +247,8 @@ void DetectorConstruction::DefineMaterials()
   ArCO2->AddElement (Ar,  fractionmass=0.7844);
   ArCO2->AddMaterial(CO2, fractionmass=0.2156);
 
-  new G4Material("NitrogenGas", z=7, a=14.01*g/mole, density=5697.4*kg/m3, kStateGas, 300*kelvin, 10*atmosphere);
+  new G4Material("NitrogenGas", z=7, a=14.01*g/mole, density=5697.4*kg/m3,
+                 kStateGas, 300*kelvin, 10*atmosphere);
 
   //another way to define mixture of gas per volume
   G4Material* NewArCO2 =
@@ -282,284 +280,15 @@ void DetectorConstruction::DefineMaterials()
   G4double IsobutaneDensity;
   G4double IsobutanePressure;
 
+  IsobutanePressure = fGasPressure/760.*atmosphere;
   IsobutaneDensity = 0.00341*mg/cm3;
-  IsobutanePressure = 0.0013158*atmosphere;
 
-  G4Material* isobutane1torr = new G4Material(name = "isobutane1torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane1torr -> AddElement(C,4);
-  isobutane1torr -> AddElement(H,10);
-  isobutane1torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane1torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
+  G4Material* Isobutane = new G4Material(name = "Isobutane", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
+  Isobutane-> AddElement(C,4);
+  Isobutane-> AddElement(H,10);
+  Isobutane-> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
+  Isobutane-> GetIonisation() -> SetMeanEnergyPerIonPair(23.0*eV);
 
-  IsobutaneDensity = 0.00682*mg/cm3;
-  IsobutanePressure = 0.0026316*atmosphere;
-
-  G4Material* isobutane2torr = new G4Material(name = "isobutane2torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane2torr -> AddElement(C,4);
-  isobutane2torr -> AddElement(H,10);
-  isobutane2torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane2torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.01024*mg/cm3;
-  IsobutanePressure = 0.0039474*atmosphere;
-
-  G4Material* isobutane3torr = new G4Material(name = "isobutane3torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane3torr -> AddElement(C,4);
-  isobutane3torr -> AddElement(H,10);
-  isobutane3torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane3torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.01365*mg/cm3;
-  IsobutanePressure = 0.0052632*atmosphere;
-
-  G4Material* isobutane4torr = new G4Material(name = "isobutane4torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane4torr -> AddElement(C,4);
-  isobutane4torr -> AddElement(H,10);
-  isobutane4torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane4torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.01706*mg/cm3;
-  IsobutanePressure = 0.0065789*atmosphere;
-
-  G4Material* isobutane5torr = new G4Material(name = "isobutane5torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane5torr -> AddElement(C,4);
-  isobutane5torr -> AddElement(H,10);
-  isobutane5torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane5torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.02048*mg/cm3;
-  IsobutanePressure = 0.0078947*atmosphere;
-
-  G4Material* isobutane6torr = new G4Material(name = "isobutane6torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane6torr -> AddElement(C,4);
-  isobutane6torr -> AddElement(H,10);
-  isobutane6torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane6torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.02389*mg/cm3;
-  IsobutanePressure = 0.0092105*atmosphere;
-
-  G4Material* isobutane7torr = new G4Material(name = "isobutane7torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane7torr -> AddElement(C,4);
-  isobutane7torr -> AddElement(H,10);
-  isobutane7torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane7torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.0273*mg/cm3;
-  IsobutanePressure = 0.0105263*atmosphere;
-
-  G4Material* isobutane8torr = new G4Material(name = "isobutane8torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane8torr -> AddElement(C,4);
-  isobutane8torr -> AddElement(H,10);
-  isobutane8torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane8torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.03072*mg/cm3;
-  IsobutanePressure = 0.0118421*atmosphere;
-
-  G4Material* isobutane9torr = new G4Material(name = "isobutane9torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane9torr -> AddElement(C,4);
-  isobutane9torr -> AddElement(H,10);
-  isobutane9torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane9torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.03413*mg/cm3;
-  IsobutanePressure = 0.0131579*atmosphere;
-
-  G4Material* isobutane10torr = new G4Material(name = "isobutane10torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane10torr -> AddElement(C,4);
-  isobutane10torr -> AddElement(H,10);
-  isobutane10torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane10torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.03755*mg/cm3;
-  IsobutanePressure = 0.0144737*atmosphere;
-
-  G4Material* isobutane11torr = new G4Material(name = "isobutane11torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane11torr -> AddElement(C,4);
-  isobutane11torr -> AddElement(H,10);
-  isobutane11torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane11torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.04097*mg/cm3;
-  IsobutanePressure = 0.0157895*atmosphere;
-
-  G4Material* isobutane12torr = new G4Material(name = "isobutane12torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane12torr -> AddElement(C,4);
-  isobutane12torr -> AddElement(H,10);
-  isobutane12torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane12torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.04438*mg/cm3;
-  IsobutanePressure = 0.0171053*atmosphere;
-
-  G4Material* isobutane13torr = new G4Material(name = "isobutane13torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane13torr -> AddElement(C,4);
-  isobutane13torr -> AddElement(H,10);
-  isobutane13torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane13torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.0478*mg/cm3;
-  IsobutanePressure = 0.01874211*atmosphere;
-
-  G4Material* isobutane14torr = new G4Material(name = "isobutane14torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane14torr -> AddElement(C,4);
-  isobutane14torr -> AddElement(H,10);
-  isobutane14torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane14torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.05121*mg/cm3;
-  IsobutanePressure = 0.0197368*atmosphere;
-
-  G4Material* isobutane15torr = new G4Material(name = "isobutane15torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane15torr -> AddElement(C,4);
-  isobutane15torr -> AddElement(H,10);
-  isobutane15torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane15torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.05463*mg/cm3;
-  IsobutanePressure = 0.0210526*atmosphere;
-
-  G4Material* isobutane16torr = new G4Material(name = "isobutane16torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane16torr -> AddElement(C,4);
-  isobutane16torr -> AddElement(H,10);
-  isobutane16torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane16torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.05804*mg/cm3;
-  IsobutanePressure = 0.0223684*atmosphere;
-
-  G4Material* isobutane17torr = new G4Material(name = "isobutane17torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane17torr -> AddElement(C,4);
-  isobutane17torr -> AddElement(H,10);
-  isobutane17torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane17torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.06146*mg/cm3;
-  IsobutanePressure = 0.0236842*atmosphere;
-
-  G4Material* isobutane18torr = new G4Material(name = "isobutane18torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane18torr -> AddElement(C,4);
-  isobutane18torr -> AddElement(H,10);
-  isobutane18torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane18torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.06488*mg/cm3;
-  IsobutanePressure = 0.025*atmosphere;
-
-  G4Material* isobutane19torr = new G4Material(name = "isobutane19torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane19torr -> AddElement(C,4);
-  isobutane19torr -> AddElement(H,10);
-  isobutane19torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane19torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.0683*mg/cm3;
-  IsobutanePressure = 0.0263158*atmosphere;
-
-  G4Material* isobutane20torr = new G4Material(name = "isobutane20torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane20torr -> AddElement(C,4);
-  isobutane20torr -> AddElement(H,10);
-  isobutane20torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane20torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.07171*mg/cm3;
-  IsobutanePressure = 0.0276316*atmosphere;
-
-  G4Material* isobutane21torr = new G4Material(name = "isobutane21torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane21torr -> AddElement(C,4);
-  isobutane21torr -> AddElement(H,10);
-  isobutane21torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane21torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.075128*mg/cm3;
-  IsobutanePressure = 0.028947*atmosphere;
-
-  G4Material* isobutane22torr = new G4Material(name = "isobutane22torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane22torr -> AddElement(C,4);
-  isobutane22torr -> AddElement(H,10);
-  isobutane22torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane22torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.078546*mg/cm3;
-  IsobutanePressure = 0.030263*atmosphere;
-
-  G4Material* isobutane23torr = new G4Material(name = "isobutane23torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane23torr -> AddElement(C,4);
-  isobutane23torr -> AddElement(H,10);
-  isobutane23torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane23torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.081964*mg/cm3;
-  IsobutanePressure = 0.031579*atmosphere;
-
-  G4Material* isobutane24torr = new G4Material(name = "isobutane24torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane24torr -> AddElement(C,4);
-  isobutane24torr -> AddElement(H,10);
-  isobutane24torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane24torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.085383*mg/cm3;
-  IsobutanePressure = 0.032895*atmosphere;
-
-  G4Material* isobutane25torr = new G4Material(name = "isobutane25torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane25torr -> AddElement(C,4);
-  isobutane25torr -> AddElement(H,10);
-  isobutane25torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane25torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.088802*mg/cm3;
-  IsobutanePressure = 0.034211*atmosphere;
-
-  G4Material* isobutane26torr = new G4Material(name = "isobutane26torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane26torr -> AddElement(C,4);
-  isobutane26torr -> AddElement(H,10);
-  isobutane26torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane26torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.092221*mg/cm3;
-  IsobutanePressure = 0.035526*atmosphere;
-
-  G4Material* isobutane27torr = new G4Material(name = "isobutane27torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane27torr -> AddElement(C,4);
-  isobutane27torr -> AddElement(H,10);
-  isobutane27torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane27torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.09564*mg/cm3;
-  IsobutanePressure = 0.036842*atmosphere;
-
-  G4Material* isobutane28torr = new G4Material(name = "isobutane28torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane28torr -> AddElement(C,4);
-  isobutane28torr -> AddElement(H,10);
-  isobutane28torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane28torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.099059*mg/cm3;
-  IsobutanePressure = 0.038158*atmosphere;
-
-  G4Material* isobutane29torr = new G4Material(name = "isobutane29torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane29torr -> AddElement(C,4);
-  isobutane29torr -> AddElement(H,10);
-  isobutane29torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane29torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.102479*mg/cm3;
-  IsobutanePressure = 0.039474*atmosphere;
-
-  G4Material* isobutane30torr = new G4Material(name = "isobutane30torr", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane30torr -> AddElement(C,4);
-  isobutane30torr -> AddElement(H,10);
-  isobutane30torr -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane30torr -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
-
-  IsobutaneDensity = 0.07684*mg/cm3;
-  IsobutanePressure = 0.0296*atmosphere;
-
-  G4Material* isobutane30mbar = new G4Material(name = "isobutane30mbar", IsobutaneDensity, ncomponents = 2, kStateGas, IsobutaneTemperature, IsobutanePressure);
-  isobutane30mbar -> AddElement(C,4);
-  isobutane30mbar -> AddElement(H,10);
-  isobutane30mbar -> GetIonisation() -> SetMeanExcitationEnergy(0.0000483);
-  isobutane30mbar -> GetIonisation() -> SetMeanEnergyPerIonPair(23*eV);
   //
   // example of vacuum
   //
@@ -894,6 +623,16 @@ void DetectorConstruction::SetWindowThickness(G4double val)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+void DetectorConstruction::SetGasPressure(G4double val)
+{
+  fGasPressure = val;
+  fAnodeX = fGasThickness;
+  fSegmentX = fGasThickness/10;
+  G4RunManager::GetRunManager()->GeometryHasBeenModified();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 void DetectorConstruction::SetGasThickness(G4double val)
 {
   fGasThickness = val;
@@ -912,6 +651,14 @@ void DetectorConstruction::SetGasSizeYZ(G4double val)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+void DetectorConstruction::SetGasXpos(G4double val)
+{
+  fXposGas  = val;
+  G4RunManager::GetRunManager()->GeometryHasBeenModified();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
+
 void DetectorConstruction::SetWorldSizeX(G4double val)
 {
   fWorldSizeX = val;
@@ -927,18 +674,6 @@ void DetectorConstruction::SetWorldSizeYZ(G4double val)
   fDefaultWorld = false;
   G4RunManager::GetRunManager()->GeometryHasBeenModified();
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void DetectorConstruction::SetGasXpos(G4double val)
-{
-  fXposGas  = val;
-  G4RunManager::GetRunManager()->GeometryHasBeenModified();
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
-
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
 
@@ -962,7 +697,6 @@ void DetectorConstruction::UpdateGeometry()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-
 //Functions to set anode geometry
 void DetectorConstruction::SetAnodePosition(G4double position)
 {
@@ -970,11 +704,15 @@ void DetectorConstruction::SetAnodePosition(G4double position)
   G4RunManager::GetRunManager()->GeometryHasBeenModified();
 }
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 void DetectorConstruction::SetAnodeLength(G4double length)
 {
   fAnodeX = length;
   G4RunManager::GetRunManager()->GeometryHasBeenModified();
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DetectorConstruction::SetSegmentLength(G4double SegLength)
 {
