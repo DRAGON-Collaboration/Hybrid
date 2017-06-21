@@ -44,8 +44,8 @@
 #include "StepMax.hh"
 
 class G4VPhysicsConstructor;
-class StepMax;
 class PhysicsListMessenger;
+class StepMax;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

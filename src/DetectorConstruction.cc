@@ -281,7 +281,7 @@ void DetectorConstruction::DefineMaterials()
   G4double IsobutaneDensity;
   G4double IsobutanePressure;
 
-  IsobutaneMolarMass = 52.18e-3*kg/mol;
+  IsobutaneMolarMass = 52.18e-3*kg/mole;
   IsobutanePressure  = fGasTemperature;
   IsobutanePressure  = fGasPressure;
   IsobutaneDensity   = k_Boltzmann*Avogadro*eplus*1e-6*IsobutaneMolarMass*fGasPressure / fGasTemperature; //0.00341*mg/cm3;

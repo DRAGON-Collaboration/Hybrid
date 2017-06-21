@@ -79,7 +79,6 @@ class DetectorMessenger: public G4UImessenger
     G4UIcmdWithADoubleAndUnit* fGasTempCmd;
     G4UIcmdWithADoubleAndUnit* fGasThickCmd;
     G4UIcmdWithADoubleAndUnit* fGasSizYZCmd;
-    G4UIcmdWithADoubleAndUnit* fGasSizYZCmd;
     G4UIcmdWithADoubleAndUnit* fGasXposCmd;
 
     G4UIcmdWithAString*        fWorldMaterCmd;
