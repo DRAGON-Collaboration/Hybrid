@@ -6,7 +6,7 @@
 /gps/particle ion               #specify an ion type projectile
 /gps/ion 2 4 2 
 /gps/ene/type Mono             #PDF from which the ion energy is sampled.
-/gps/energy  5.80477 MeV   
+/gps/energy  5.15659 MeV   
 /gps/direction 1 0 0
 /gps/pos/centre -20 0 0
 
