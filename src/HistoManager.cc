@@ -77,7 +77,7 @@ HistoManager* HistoManager::GetPointer()
 
 HistoManager::HistoManager() : file0(0)
 {
-  fileName = "Si_Ion_v8.root";
+  fileName = "Hybrid.root";
 
   fMessenger = new HistoMessenger(this);
 

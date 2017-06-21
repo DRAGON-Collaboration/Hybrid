@@ -1,31 +1,23 @@
 #
-# Macro file to run simulation of 12C
+# Macro file to run simulation of alphas from 244Cm
 #
 
-/gps/pos/type Point
-/gps/particle ion               #specify an ion type projectile
-/gps/ion 2 4 2 
-/gps/ene/type Mono             #PDF from which the ion energy is sampled.
-/gps/energy  5.80477 MeV   
-/gps/direction 1 0 0
-/gps/pos/centre -20 0 0
-
-
-/run/beamOn 5000
-
-/testem/det/setGasMat isobutane4torr
+/testem/det/setGasMat isobutane10torr
 /testem/det/setWinThick 1.5 um
 
-/gps/pos/type Beam              #Specifies a beam source type position distribution
-/gps/particle ion               #specify an ion type projectile
-/gps/ion 2 4 2                  #Z A q
-/gps/pos/centre -20 0 0         #X Y Z coordinates of the source
-/gps/ene/type Mono              #PDF from which the ion energy is sampled.
-/gps/ene/mono 5.80477 MeV       #Mean energy of ion PDF
+/gps/pos/type Plane
+/gps/pos/shape Rectangle
+/gps/pos/centre -20 0 0
+/gps/direction 1 0 0
+/gps/pos/halfx 2.475 cm
+/gps/pos/halfy 2.475 cm
+/gps/pos/rot1 0 0 1
+/gps/particle ion
+/gps/ion 2 4 2
+/gps/ene/type Mono
+/gps/energy  5.80477 MeV
 # /gps/pos/rot1 1 0 0
 # /gps/pos/rot2 0 1 0
 # /gps/ang/maxphi 3.14159265359
 
-
-/run/beamOn 100                 #Begins a run with n events
->>>>>>> stash
+/run/beamOn 100
