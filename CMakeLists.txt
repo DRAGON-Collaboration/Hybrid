@@ -55,6 +55,9 @@ set(Hybrid_SCRIPTS
   alpha_244Cm.mac
   alpha_241Am.mac
   alpha_239Pu.mac
+=======
+  alpha.mac
+>>>>>>> stash
   )
 
 foreach(_script ${Hybrid_SCRIPTS})
