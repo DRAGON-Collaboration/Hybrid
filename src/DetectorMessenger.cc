@@ -36,9 +36,9 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
-  :G4UImessenger(), fTestemDir(0), fDetDir(0), fWinMaterCmd(0), fWinThickCmd(0), fGasMaterCmd(0),
-   fGasPressCmd(0), fGasTempCmd(0), fGasThickCmd(0), fGasSizYZCmd(0), fGasXposCmd(0), fWorldMaterCmd(0),
-   fWorldXCmd(0), fWorldYZCmd(0), fUpdateCmd(0),
+  :G4UImessenger(), fTestemDir(0), fDetDir(0), fWinMaterCmd(0), fWinThickCmd(0),
+   fGasPressCmd(0), fGasTempCmd(0), fGasMaterCmd(0), fGasThickCmd(0), fGasSizYZCmd(0), fGasXposCmd(0),
+   fWorldMaterCmd(0), fWorldXCmd(0), fWorldYZCmd(0), fUpdateCmd(0),
    fIonCmd(0), fDetector(Det), fAnodePosCmd(0), fAnodeLengthCmd(0),
    fSegmentLengthCmd(0)
 {
@@ -47,11 +47,6 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
 
   fDetDir = new G4UIdirectory("/testem/det/");
   fDetDir->SetGuidance("detector construction commands");
-
-  fGasMaterCmd = new G4UIcmdWithAString("/testem/det/setGasMat",this);
-  fGasMaterCmd->SetGuidance("Select Material of the Gas.");
-  fGasMaterCmd->SetParameterName("choice",false);
-  fGasMaterCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   fWorldMaterCmd = new G4UIcmdWithAString("/testem/det/setWorldMat",this);
   fWorldMaterCmd->SetGuidance("Select Material of the World.");
@@ -103,6 +98,11 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   fGasXposCmd->SetParameterName("Xpos",false);
   fGasXposCmd->SetUnitCategory("Length");
   fGasXposCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  fGasMaterCmd = new G4UIcmdWithAString("/testem/det/setGasMat",this);
+  fGasMaterCmd->SetGuidance("Select Material of the Gas.");
+  fGasMaterCmd->SetParameterName("choice",false);
+  fGasMaterCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   fWorldXCmd = new G4UIcmdWithADoubleAndUnit("/testem/det/setWorldX",this);
   fWorldXCmd->SetGuidance("Set X size of the World");
@@ -159,11 +159,11 @@ DetectorMessenger::~DetectorMessenger()
 {
   delete fWinMaterCmd;
   delete fWinThickCmd;
-  delete fGasMaterCmd;
   delete fGasThickCmd;
   delete fGasSizYZCmd;
   delete fGasPressCmd;
   delete fGasTempCmd;
+  delete fGasMaterCmd;
   delete fGasXposCmd;
   delete fWorldMaterCmd;
   delete fWorldXCmd;
@@ -189,13 +189,21 @@ void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
     {fDetector->SetWorldMaterial(newValue);}
 
   if ( command == fGasMaterCmd )
-    {fDetector->SetGasMaterial(newValue);}
+    {fDetector->SetGasMaterial("isobutane");}
 
   if ( command == fGasPressCmd )
-    {fDetector->SetGasPressure(fGasPressCmd->GetNewDoubleValue(newValue));}
+    {
+      fDetector->SetGasPressure(fGasPressCmd->GetNewDoubleValue(newValue));
+      fDetector->CalcGasDensity();
+      fDetector->SetGasMaterial("isobutane");
+    }
 
   if ( command == fGasTempCmd )
-    {fDetector->SetGasTemperature(fGasTempCmd->GetNewDoubleValue(newValue));}
+    {
+      fDetector->SetGasTemperature(fGasTempCmd->GetNewDoubleValue(newValue));
+      fDetector->CalcGasDensity();
+      fDetector->SetGasMaterial("isobutane");
+    }
 
   if ( command == fGasThickCmd )
     {fDetector->SetGasThickness(fGasThickCmd->GetNewDoubleValue(newValue));}

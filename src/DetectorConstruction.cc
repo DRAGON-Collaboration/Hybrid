@@ -33,7 +33,6 @@
 
 #include "DetectorConstruction.hh"
 
-//#include "PhysicsList.cc"
 #include "TargetSD.hh"
 #include "G4SDManager.hh"
 #include "F02ElectricFieldSetup.hh"
@@ -60,13 +59,17 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+const G4double IsobutaneMolarMass = 52.18e-3*kg/mole;
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 DetectorConstruction::DetectorConstruction()
-:fSolidDSSSDActive(0),fLogicDSSSDActive(0),fPhysiDSSSDActive(0),fDSSSDActiveMaterial(0),
- fSolidDSSSDDeadlayer(0),fLogicDSSSDDeadlayer(0),fPhysiDSSSDDeadlayer(0),fDSSSDDeadlayerMaterial(0),
- fSolidDSSSDDetector(0),fLogicDSSSDDetector(0),fPhysiDSSSDDetector(0),fDSSSDDetectorMaterial(0),
- fSolidWindow(0),fLogicWindow(0),fPhysiWindow(0),fWindowMaterial(0),
- fSolidGas(0),fLogicGas(0),fPhysiGas(0),fGasMaterial(0),
-  fSolidWorld(0),fLogicWorld(0),fPhysiWorld(0),fWorldMaterial(0),fRegGasDet(0),fGasDetectorCuts(0),fTargetSD(0), fDefaultWorld(true)
+  :fSolidDSSSDActive(0),fLogicDSSSDActive(0),fPhysiDSSSDActive(0),fDSSSDActiveMaterial(0),
+   fSolidDSSSDDeadlayer(0),fLogicDSSSDDeadlayer(0),fPhysiDSSSDDeadlayer(0),fDSSSDDeadlayerMaterial(0),
+   fSolidDSSSDDetector(0),fLogicDSSSDDetector(0),fPhysiDSSSDDetector(0),fDSSSDDetectorMaterial(0),
+   fSolidWindow(0),fLogicWindow(0),fPhysiWindow(0),fWindowMaterial(0),
+   fSolidGas(0),fLogicGas(0),fPhysiGas(0),fGasMaterial(0),
+   fSolidWorld(0),fLogicWorld(0),fPhysiWorld(0),fWorldMaterial(0),fRegGasDet(0),fGasDetectorCuts(0),fTargetSD(0), fDefaultWorld(true)
 {
   //Define Detector Geometry
   fDSSSDActiveThickness    = 300*um;
@@ -83,7 +86,7 @@ DetectorConstruction::DetectorConstruction()
   fXposGas                 = 0.0*cm;
   ComputeCalorParameters();
 
-   //Anode Geometry
+  //Anode Geometry
   fAnodeX = fGasThickness;
   fAnodePosition = 0; //Anode size and position can be set from DetectorMessenger
   fSegmentX = fGasThickness/11; //Segment width can be set from DetectorMessenger
@@ -277,17 +280,15 @@ void DetectorConstruction::DefineMaterials()
   steam->GetIonisation()->SetMeanExcitationEnergy(71.6*eV);
 
   //Isobutane definitions
-  G4double IsobutaneTemperature;
-  G4double IsobutaneDensity;
-  G4double IsobutanePressure;
+  // G4double IsobutaneDensity, IsobutaneMolarMass, IsobutaneTemperature, IsobutanePressure;
 
-  IsobutaneMolarMass = 52.18e-3*kg/mole;
-  IsobutanePressure  = fGasTemperature;
-  IsobutanePressure  = fGasPressure;
-  IsobutaneDensity   = k_Boltzmann*Avogadro*eplus*1e-6*IsobutaneMolarMass*fGasPressure / fGasTemperature; //0.00341*mg/cm3;
+  // IsobutaneTemperature = fGasTemperature;
+  // IsobutanePressure    = fGasPressure;
+  // IsobutaneMolarMass   = 52.18e-3*kg/mole;
+  // IsobutaneDensity     = k_Boltzmann*Avogadro*eplus*1e-6*IsobutaneMolarMass*fGasPressure / fGasTemperature; //0.00341*mg/cm3;
 
   G4Material* Isobutane =
-    new G4Material(name = "Isobutane", IsobutaneDensity, ncomponents = 2,
+    new G4Material(name = "Isobutane", fGasDensity, ncomponents = 2,
                    kStateGas, fGasTemperature, fGasPressure);
   Isobutane-> AddElement(C,4);
   Isobutane-> AddElement(H,10);
@@ -305,7 +306,6 @@ void DetectorConstruction::DefineMaterials()
                  kStateGas,temperature,pressure);
 
   //Set the Gas Material
-
   //SetGasMaterial(Isobutane);
 }
 
@@ -323,7 +323,7 @@ void DetectorConstruction::ComputeCalorParameters()
   fXposDSSSDDetector = fXendGas+0.5*fDSSSDDetectorThickness;
 
   if (fDefaultWorld) {
-     fWorldSizeX = 3*m; fWorldSizeYZ= 1.2*fGasSizeYZ;
+    fWorldSizeX = 3*m; fWorldSizeYZ= 1.2*fGasSizeYZ;
   }
 }
 
@@ -350,31 +350,31 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
   // World
   //
   fSolidWorld = new G4Box("World",                                //its name
-                   fWorldSizeX/2,fWorldSizeYZ/2,fWorldSizeYZ/2);   //its size
+                          fWorldSizeX/2,fWorldSizeYZ/2,fWorldSizeYZ/2);   //its size
 
   fLogicWorld = new G4LogicalVolume(fSolidWorld,                //its solid
-                                   fWorldMaterial,        //its material
-                                   "World");                //its name
+                                    fWorldMaterial,        //its material
+                                    "World");                //its name
 
   fPhysiWorld = new G4PVPlacement(0,                        //no rotation
-                                   G4ThreeVector(),        //at (0,0,0)
-                                 fLogicWorld,                //its logical volume
-                                 "World",                //its name
-                                 0,                        //its mother  volume
-                                 false,                        //no boolean operation
-                                 0);                        //copy number
+                                  G4ThreeVector(),        //at (0,0,0)
+                                  fLogicWorld,                //its logical volume
+                                  "World",                //its name
+                                  0,                        //its mother  volume
+                                  false,                        //no boolean operation
+                                  0);                        //copy number
 
   //Gas
   //
   fSolidGas = new G4Box("Gas",
-                      fGasThickness/2,fGasSizeYZ/2,fGasSizeYZ/2);
+                        fGasThickness/2,fGasSizeYZ/2,fGasSizeYZ/2);
 
   fLogicGas = new G4LogicalVolume(fSolidGas,    //its solid
-                                            fGasMaterial, //its material
-                                          "Gas");       //its name
+                                  fGasMaterial, //its material
+                                  "Gas");       //its name
 
   fPhysiGas = new G4PVPlacement(0,                   //no rotation
-                        G4ThreeVector(fXposGas,0.,0.),    //its position
+                                G4ThreeVector(fXposGas,0.,0.),    //its position
                                 fLogicGas,     //its logical volume
                                 "Gas",         //its name
                                 fLogicWorld,        //its mother
@@ -388,11 +388,11 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
   fSolidAnodeBox = new G4Box("Anode Holder Volume", fAnodeX/2, fGasSizeYZ/2, fGasSizeYZ/2);
   fLogicAnodeBox = new G4LogicalVolume(fSolidAnodeBox, fGasMaterial, "Anode Dead Region");
   fPhysiAnodeBox = new G4PVPlacement(0, G4ThreeVector(fAnodePosition,0.,0.),
-                     fLogicAnodeBox,
-                     "Anode Box",
-                     fLogicGas,
-                     false,
-                     0);
+                                     fLogicAnodeBox,
+                                     "Anode Box",
+                                     fLogicGas,
+                                     false,
+                                     0);
   //Anode Segments
   //fSegmentX = 1.0*cm; //Segment width can be set from DetectorMessenger
   nSegments = floor(fAnodeX / fSegmentX);
@@ -412,84 +412,84 @@ G4VPhysicalVolume* DetectorConstruction::ConstructCalorimeter()
       // G4String SegmentNumber = G4UIcommand::ConvertToString(n);
 
       //      fPhysiSegment =
-new G4PVPlacement(0, G4ThreeVector(-fAnodeX/2+fSegmentX/2+i*(fSegmentX+fAnodeDeadLayerThickness), 0., 0.),
-                    fLogicSegment,
-                    "Gas Segment",
-                    fLogicAnodeBox,
-                    false,
-                    i+1);
-                    }
+      new G4PVPlacement(0, G4ThreeVector(-fAnodeX/2+fSegmentX/2+i*(fSegmentX+fAnodeDeadLayerThickness), 0., 0.),
+                        fLogicSegment,
+                        "Gas Segment",
+                        fLogicAnodeBox,
+                        false,
+                        i+1);
+    }
 
   fRegGasDet->AddRootLogicalVolume(fLogicSegment);
   fRegGasDet->AddRootLogicalVolume(fLogicGas);
 
 
-   // Ionization Chamber Entrance Window
+  // Ionization Chamber Entrance Window
   //
   fSolidWindow = new G4Box("Window",
-                      fWindowThickness/2,fWindowSizeYZ/2,fWindowSizeYZ/2);
+                           fWindowThickness/2,fWindowSizeYZ/2,fWindowSizeYZ/2);
 
   fLogicWindow = new G4LogicalVolume(fSolidWindow,    //its solid
-                                            fWindowMaterial, //its material
-                                          "Window");       //its name
+                                     fWindowMaterial, //its material
+                                     "Window");       //its name
 
   fPhysiWindow = new G4PVPlacement(0,                   //no rotation
-                        G4ThreeVector(fXposWindow,0.,0.),    //its position
-                                fLogicWindow,     //its logical volume
-                                "Window",         //its name
-                                fLogicWorld,        //its mother
-                                false,             //no boolean operation
-                                0);                //copy number
+                                   G4ThreeVector(fXposWindow,0.,0.),    //its position
+                                   fLogicWindow,     //its logical volume
+                                   "Window",         //its name
+                                   fLogicWorld,        //its mother
+                                   false,             //no boolean operation
+                                   0);                //copy number
 
   // DSSSD holder volume for strips and deadlayer
   //
   fSolidDSSSDDetector = new G4Box("DSSSDDetector",
-                      fDSSSDDetectorThickness/2,fDSSSDDetectorSizeYZ/2,fDSSSDActiveSizeZ/2);
+                                  fDSSSDDetectorThickness/2,fDSSSDDetectorSizeYZ/2,fDSSSDActiveSizeZ/2);
 
   fLogicDSSSDDetector = new G4LogicalVolume(fSolidDSSSDDetector,    //its solid
-                                          fDSSSDDetectorMaterial, //its material
-                                          "DSSSDDetector");       //its name
+                                            fDSSSDDetectorMaterial, //its material
+                                            "DSSSDDetector");       //its name
 
   fPhysiDSSSDDetector = new G4PVPlacement(0,                   //no rotation
-                        G4ThreeVector(fXposDSSSDDetector,0.,0.),         //its position
-                                fLogicDSSSDDetector,             //its logical volume
-                                "DSSSDDetector",                 //its name
-                                fLogicWorld,         //its mother
-                                false,                       //no boolean operator
-                                0);                      //copy number
+                                          G4ThreeVector(fXposDSSSDDetector,0.,0.),         //its position
+                                          fLogicDSSSDDetector,             //its logical volume
+                                          "DSSSDDetector",                 //its name
+                                          fLogicWorld,         //its mother
+                                          false,                       //no boolean operator
+                                          0);                      //copy number
   // DSSSD Active Strip
   //
   fSolidDSSSDActive = new G4Box("DSSSDActive",
-                      fDSSSDActiveThickness/2,fDSSSDDetectorSizeYZ/2,fDSSSDActiveSizeZ/2);
+                                fDSSSDActiveThickness/2,fDSSSDDetectorSizeYZ/2,fDSSSDActiveSizeZ/2);
 
   fLogicDSSSDActive = new G4LogicalVolume(fSolidDSSSDActive,    //its solid
                                           fDSSSDActiveMaterial, //its material
                                           "DSSSDActive");       //its name
 
   fPhysiDSSSDActive = new G4PVPlacement(0,                   //no rotation
-                        G4ThreeVector(fDSSSDDeadlayerThickness/2,0.,0.),         //its position
-                                fLogicDSSSDActive,           //its logical volume
-                                "DSSSDActive",               //its name
-                                fLogicDSSSDDetector,         //its mother
-                                false,                       //no boolean operator
-                                0);                      //copy number
+                                        G4ThreeVector(fDSSSDDeadlayerThickness/2,0.,0.),         //its position
+                                        fLogicDSSSDActive,           //its logical volume
+                                        "DSSSDActive",               //its name
+                                        fLogicDSSSDDetector,         //its mother
+                                        false,                       //no boolean operator
+                                        0);                      //copy number
 
   // DSSSD Deadlayer
   //
   fSolidDSSSDDeadlayer = new G4Box("DSSSDDeadlayer",
-                      fDSSSDDeadlayerThickness/2,fDSSSDDetectorSizeYZ/2,fDSSSDDetectorSizeYZ/2);
+                                   fDSSSDDeadlayerThickness/2,fDSSSDDetectorSizeYZ/2,fDSSSDDetectorSizeYZ/2);
 
   fLogicDSSSDDeadlayer = new G4LogicalVolume(fSolidDSSSDDeadlayer,    //its solid
-                                          fDSSSDDeadlayerMaterial, //its material
-                                          "DSSSDDeadlayer");       //its name
+                                             fDSSSDDeadlayerMaterial, //its material
+                                             "DSSSDDeadlayer");       //its name
 
   fPhysiDSSSDDeadlayer = new G4PVPlacement(0,                   //no rotation
-                        G4ThreeVector(-fDSSSDActiveThickness/2,0.,0.),       //its position
-                                fLogicDSSSDDeadlayer,            //its logical volume
-                                "DSSSDDeadlayer",                //its name
-                                fLogicDSSSDDetector,                 //its mother
-                                false,                       //no boolean operator
-                                0);                      //copy number
+                                           G4ThreeVector(-fDSSSDActiveThickness/2,0.,0.),       //its position
+                                           fLogicDSSSDDeadlayer,            //its logical volume
+                                           "DSSSDDeadlayer",                //its name
+                                           fLogicDSSSDDetector,                 //its mother
+                                           false,                       //no boolean operator
+                                           0);                      //copy number
 
 
   //Sensitive Detectors
@@ -502,13 +502,13 @@ new G4PVPlacement(0, G4ThreeVector(-fAnodeX/2+fSegmentX/2+i*(fSegmentX+fAnodeDea
   fLogicSegment->SetSensitiveDetector(fTargetSD);
   fLogicGas->SetSensitiveDetector(fTargetSD);
 
-//Construct the field creator - this will register the field it creates
-if (!fEmFieldSetup.Get()) {
+  //Construct the field creator - this will register the field it creates
+  if (!fEmFieldSetup.Get()) {
     F02ElectricFieldSetup* fieldSetup = new F02ElectricFieldSetup();
     G4AutoDelete::Register(fieldSetup); //Kernel will delete the messenger
     fEmFieldSetup.Put(fieldSetup);}
 
- PrintCalorParameters();
+  PrintCalorParameters();
 
   //always return the physical World
   //
@@ -518,13 +518,13 @@ if (!fEmFieldSetup.Get()) {
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 /*void DetectorConstruction::ConstructField()
-{
-//Construct the field creator - this will register the field it creates
-if (!fEmFieldSetup.Get()) {
-    F02ElectricFieldSetup* fieldSetup = new F02ElectricFieldSetup();
-    G4AutoDelete::Register(fieldSetup); //Kernel will delete the messenger
-    fEmFieldSetup.Put(fieldSetup);}
-    }*/
+  {
+  //Construct the field creator - this will register the field it creates
+  if (!fEmFieldSetup.Get()) {
+  F02ElectricFieldSetup* fieldSetup = new F02ElectricFieldSetup();
+  G4AutoDelete::Register(fieldSetup); //Kernel will delete the messenger
+  fEmFieldSetup.Put(fieldSetup);}
+  }*/
 
 
 void DetectorConstruction::PrintCalorParameters()
@@ -546,9 +546,9 @@ void DetectorConstruction::PrintCalorParameters()
   G4cout << " X position of the middle of the Gas "
          << G4BestUnit(fXposGas,"Length");
   G4cout << "\n The anode is positioned at " << G4BestUnit(fAnodePosition, "Length")
-     << " with respect to the middle of the gas.";
+         << " with respect to the middle of the gas.";
   G4cout << "\n The anode is " << G4BestUnit(fAnodeX, "Length")
-     << " long and divided into " << nSegments << " segments." << G4endl;
+         << " long and divided into " << nSegments << " segments." << G4endl;
   G4cout << "Each segment has a width of " << G4BestUnit(fSegmentX, "Length") << G4endl;
 
   G4cout << "\n The WINDOW is made of "
@@ -586,15 +586,10 @@ void DetectorConstruction::SetWindowMaterial(G4String materialChoice)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 
-void DetectorConstruction::SetGasMaterial(
-                      //G4Material* materialChoice
-G4String materialChoice
-)
+void DetectorConstruction::SetGasMaterial(G4String materialChoice)
 {
   // search the material by its name
-  G4Material* pttoMaterial =
-    // materialChoice;
-  G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
+  G4Material* pttoMaterial = G4NistManager::Instance()->FindOrBuildMaterial(materialChoice);
 
   if (pttoMaterial && fGasMaterial != pttoMaterial) {
     fGasMaterial = pttoMaterial;
@@ -729,4 +724,9 @@ void DetectorConstruction::SetSegmentLength(G4double SegLength)
 {
   fSegmentX = SegLength;
   G4RunManager::GetRunManager()->GeometryHasBeenModified();
+}
+
+void DetectorConstruction::CalcGasDensity()
+{
+  fGasDensity = k_Boltzmann*Avogadro*eplus*1e-6*IsobutaneMolarMass*fGasPressure / fGasTemperature; //0.00341*mg/cm3;
 }

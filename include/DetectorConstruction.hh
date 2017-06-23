@@ -75,7 +75,6 @@ public:
   void SetWindowMaterial(G4String);
   void SetWindowThickness(G4double);
 
-  // void SetGasMaterial (G4Material*);
   void SetGasMaterial(G4String);
   void SetGasPressure(G4double);
   void SetGasTemperature(G4double);
@@ -96,8 +95,8 @@ public:
   //virtual void ConstructField();
   void SetPairEnergy(G4double);
   void UpdateGeometry();
-
   void PrintCalorParameters();
+  void CalcGasDensity();
 
   G4Material* GetWindowMaterial()	{return fWindowMaterial;};
   G4double    GetWindowThickness()  {return fWindowThickness;};
@@ -138,25 +137,25 @@ private:
   G4Box*             fSolidDSSSDActive;
   G4LogicalVolume*   fLogicDSSSDActive;
   G4VPhysicalVolume* fPhysiDSSSDActive;
-  G4Material*	fDSSSDActiveMaterial;
-  G4double		fDSSSDActiveSizeZ;	// active strip width
-  G4double		fDSSSDActiveThickness;	// active, gap, holder same thickness
+  G4Material*	     fDSSSDActiveMaterial;
+  G4double		     fDSSSDActiveSizeZ;	// active strip width
+  G4double		     fDSSSDActiveThickness;	// active, gap, holder same thickness
 
   // dead layer
   G4Box*             fSolidDSSSDDeadlayer;
   G4LogicalVolume*   fLogicDSSSDDeadlayer;
   G4VPhysicalVolume* fPhysiDSSSDDeadlayer;
-  G4Material*	fDSSSDDeadlayerMaterial;
-  G4double		fDSSSDDeadlayerThickness;
+  G4Material*	     fDSSSDDeadlayerMaterial;
+  G4double		     fDSSSDDeadlayerThickness;
 
   // mother holder for front and backs strips and deadlayer
   G4Box*             fSolidDSSSDDetector;
   G4LogicalVolume*   fLogicDSSSDDetector;
   G4VPhysicalVolume* fPhysiDSSSDDetector;
-  G4Material*	fDSSSDDetectorMaterial;
-  G4double		fDSSSDDetectorThickness; // back layer + front layer + dead layer
-  G4double		fDSSSDDetectorSizeYZ;
-  G4double		fXposDSSSDDetector;
+  G4Material*	     fDSSSDDetectorMaterial;
+  G4double		     fDSSSDDetectorThickness; // back layer + front layer + dead layer
+  G4double		     fDSSSDDetectorSizeYZ;
+  G4double		     fXposDSSSDDetector;
 
   // BLOCKED UNTIL POSITION NEEDED
   // // gap between strips
@@ -199,6 +198,7 @@ private:
   G4VPhysicalVolume* fPhysiGas;
   G4Material*        fGasMaterial;
   G4double           fGasPressure;
+  G4double           fGasDensity;
   G4double           fGasTemperature;
   G4double           fGasThickness;
   G4double           fGasSizeYZ;
@@ -206,18 +206,18 @@ private:
   G4double           fXstartGas, fXendGas;
 
   //Anode Holder Volume
-  G4double fAnodeX;
-  G4double fAnodePosition;
-  G4Box* fSolidAnodeBox;
-  G4LogicalVolume* fLogicAnodeBox;
+  G4double           fAnodeX;
+  G4double           fAnodePosition;
+  G4Box*             fSolidAnodeBox;
+  G4LogicalVolume*   fLogicAnodeBox;
   G4VPhysicalVolume* fPhysiAnodeBox;
 
   //Anode Segmentation
-  G4double fSegmentX;
-  G4int nSegments;
-  G4double fAnodeDeadLayerThickness;
-  G4Box* fSolidSegment;
-  G4LogicalVolume* fLogicSegment;
+  G4int              nSegments;
+  G4double           fAnodeDeadLayerThickness;
+  G4double           fSegmentX;
+  G4Box*             fSolidSegment;
+  G4LogicalVolume*   fLogicSegment;
   G4VPhysicalVolume* fPhysiSegment;
 
   // World
@@ -234,11 +234,10 @@ private:
 
   //G4UniformMagField* fMagField;
   G4Cache<F02ElectricFieldSetup*> fEmFieldSetup;
-  DetectorMessenger* fDetectorMessenger;
+  DetectorMessenger*              fDetectorMessenger;
 
   G4bool fCheckOverlaps; //Option to activate checking of overlaps
 private:
-
   void DefineMaterials();
   void ComputeCalorParameters();
   G4VPhysicalVolume* ConstructCalorimeter();

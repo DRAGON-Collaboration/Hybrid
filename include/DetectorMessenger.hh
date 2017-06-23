@@ -71,7 +71,6 @@ class DetectorMessenger: public G4UImessenger
     G4UIdirectory*             fDetDir;
 
     G4UIcmdWithAString*        fWinMaterCmd;
-    G4UIcmdWithAString*        fGasMaterCmd;
 
     G4UIcmdWithADoubleAndUnit* fWinThickCmd;
 
@@ -80,6 +79,7 @@ class DetectorMessenger: public G4UImessenger
     G4UIcmdWithADoubleAndUnit* fGasThickCmd;
     G4UIcmdWithADoubleAndUnit* fGasSizYZCmd;
     G4UIcmdWithADoubleAndUnit* fGasXposCmd;
+    G4UIcmdWithAString*        fGasMaterCmd;
 
     G4UIcmdWithAString*        fWorldMaterCmd;
     G4UIcmdWithADoubleAndUnit* fWorldXCmd;

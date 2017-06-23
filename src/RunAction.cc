@@ -78,14 +78,13 @@ void RunAction::BeginOfRunAction(const G4Run* aRun)
 
   //Tell HistoManager the parameters of the detector needed to calculate stopping power
   fHisto->SetDetectorParameters(fDetector->GetNumberOfSegments(),
-                fDetector->GetSegmentThickness(),
-                fDetector->GetGasMaterial()->GetDensity(),
-                fDetector->GetGasMaterial()->GetIonisation()
-                ->GetMeanEnergyPerIonPair(),
-                fDetector->GetDSSSDDetectorSizeYZ(),
-                fDetector->GetGasThickness(),
-                fDetector->GetGasSizeYZ(),
-                fDetector->GetGasMaterial()->GetName());
+                                fDetector->GetSegmentThickness(),
+                                fDetector->GetGasMaterial()->GetDensity(),
+                                fDetector->GetGasMaterial()->GetIonisation()->GetMeanEnergyPerIonPair(),
+                                fDetector->GetDSSSDDetectorSizeYZ(),
+                                fDetector->GetGasThickness(),
+                                fDetector->GetGasSizeYZ(),
+                                fDetector->GetGasMaterial()->GetName());
   //Must come before fHisto->BeginOfRun()
 
   G4int id = aRun->GetRunID();
@@ -225,11 +224,11 @@ void RunAction::EndOfRunAction(const G4Run* aRun)
   for (int i=0; i < NumberOfSegments; i++)
     {
       G4cout
-    << "\n mean Energy in Segment " << i+1 << " : " << G4BestUnit(fSumESegment[i], "Energy")
-    << " +- "                       << G4BestUnit(rmsESegment[i], "Energy")
-    << "\t Ion Pairs Generated in Segment " << i+1 << " : " << fSumSegmentIons[i]
-    << " +- "                       << rmsSegmentIons[i]
-    << G4endl;
+        << "\n mean Energy in Segment " << i+1 << " : " << G4BestUnit(fSumESegment[i], "Energy")
+        << " +- "                       << G4BestUnit(rmsESegment[i], "Energy")
+        << "\t Ion Pairs Generated in Segment " << i+1 << " : " << fSumSegmentIons[i]
+        << " +- "                       << rmsSegmentIons[i]
+        << G4endl;
     }
 
   //set precision for printing
@@ -248,7 +247,7 @@ void RunAction::EndOfRunAction(const G4Run* aRun)
          << material->GetName() << " (density: "
          << G4BestUnit(density,"Volumic Mass") << ";   radiation length: "
          << G4BestUnit(radl,   "Length")       << ")"
-     <<"Charge " << charge << G4endl;
+         <<"Charge " << charge << G4endl;
 
   //save histograms
   fHisto->save();
