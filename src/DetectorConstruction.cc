@@ -77,7 +77,7 @@ DetectorConstruction::DetectorConstruction()
   fDSSSDDetectorSizeYZ     = 49.5*mm;
   fDSSSDActiveSizeZ        = fDSSSDDetectorSizeYZ; // active silicon width
   fDSSSDDeadlayerThickness = 0.4*um;
-  fWindowThickness         = 0.5*um;
+  fWindowThickness         = 1.5*um;
   fWindowSizeYZ            = 5.0*cm;
   fXposWindow              = 0.0*cm;
   fGasThickness            = 10.8*cm;
