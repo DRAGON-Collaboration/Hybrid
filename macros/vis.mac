@@ -90,4 +90,5 @@
 #/vis/viewer/flush
 
 /vis/ogl/set/displayListLimit 10000000
-/vis/scene/endOfEventAction accumulate -1
+/vis/scene/endOfEventAction accumulate 1000
+# /vis/scene/endOfEventAction accumulate -1

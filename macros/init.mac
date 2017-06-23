@@ -13,4 +13,4 @@
 /run/initialize
 #
 # Visualization setting
-/control/execute vis.mac
+/control/execute macros/vis.mac

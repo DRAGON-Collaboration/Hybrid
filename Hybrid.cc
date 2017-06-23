@@ -120,7 +120,7 @@ int main(int argc,char** argv)
 
 #ifdef G4UI_USE
       G4UIExecutive * ui = new G4UIExecutive(argc,argv);
-      UI->ApplyCommand("/control/execute init_vis.mac");
+      UI->ApplyCommand("/control/execute macros/init.mac");
       ui->SessionStart();
       delete ui;
 #endif
