@@ -44,22 +44,8 @@ add_executable(Hybrid Hybrid.cc ${sources} ${headers})
 target_link_libraries(Hybrid ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 
 #----------------------------------------------------------------------------
-# Copy all scripts to the build directory, i.e. the directory in which we
-# build Hybrid. This is so that we can run the executable directly because it
-# relies on these scripts being in the current working directory.
+# Copy all macros directory to the build directory.
 #
-# set(Hybrid_SCRIPTS
-#   macros/*
-#   )
-
-# foreach(_script ${Hybrid_SCRIPTS})
-#   configure_file(
-#     ${PROJECT_SOURCE_DIR}/macros/${_script}
-#     ${PROJECT_BINARY_DIR}/${_script}
-#     COPYONLY
-#     )
-# endforeach()
-
 file(COPY macros DESTINATION ${PROJECT_BINARY_DIR})
 
 #----------------------------------------------------------------------------
