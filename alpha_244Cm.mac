@@ -1,23 +1,19 @@
 #
-# Macro file to run simulation of alphas from 244Cm
+# Macro file to run simulation of 239Pu alphas
 #
 
-/testem/det/setGasMat isobutane10torr
-/testem/det/setWinThick 1.5 um
+/gps/pos/type Point
+/gps/particle ion               #specify an ion type projectile
+/gps/ion 2 4 2 
+/gps/ene/type Mono             #PDF from which the ion energy is sampled.
+/gps/energy  5.80477 MeV   
+/gps/ang/type iso
+/gps/ang/maxtheta 1.1 deg       #the angle of cone which allows particles through the window
+/gps/ang/rot1 0 0 1
+/gps/ang/rot2 0 1 0
+#rotation matrices cuz geant4 has wacky direction convention
 
-/gps/pos/type Plane
-/gps/pos/shape Rectangle
-/gps/pos/centre -20 0 0
-/gps/direction 1 0 0
-/gps/pos/halfx 2.475 cm
-/gps/pos/halfy 2.475 cm
-/gps/pos/rot1 0 0 1
-/gps/particle ion
-/gps/ion 2 4 2
-/gps/ene/type Mono
-/gps/energy  5.80477 MeV
-# /gps/pos/rot1 1 0 0
-# /gps/pos/rot2 0 1 0
-# /gps/ang/maxphi 3.14159265359
+/gps/pos/centre -1.2 0. 0. m        #approximate distance from source(doesn't really matter too much as you essentially have a planar distribution  arriving at the window)
 
-/run/beamOn 100
+
+/run/beamOn 5000
