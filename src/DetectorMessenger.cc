@@ -37,7 +37,7 @@
 
 DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
   :G4UImessenger(), fTestemDir(0), fDetDir(0), fWinMaterCmd(0), fWinThickCmd(0),
-   fGasPressCmd(0), fGasTempCmd(0), fGasMaterCmd(0), fGasThickCmd(0), fGasSizYZCmd(0), fGasXposCmd(0),
+   fGasPressCmd(0), fGasTempCmd(0), fGasThickCmd(0), fGasSizYZCmd(0), fGasXposCmd(0), fGasMaterCmd(0),
    fWorldMaterCmd(0), fWorldXCmd(0), fWorldYZCmd(0), fUpdateCmd(0),
    fIonCmd(0), fDetector(Det), fAnodePosCmd(0), fAnodeLengthCmd(0),
    fSegmentLengthCmd(0)
@@ -67,7 +67,7 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction * Det)
 
   fGasPressCmd = new G4UIcmdWithADoubleAndUnit ("/testem/det/setGasPress",this);
   fGasPressCmd->SetGuidance("Select Pressure of the Gas.");
-  fGasPressCmd->SetParameterName("Press",false);
+  fGasPressCmd->SetParameterName("Pressure",false);
   fGasPressCmd->SetUnitCategory("Pressure");
   fGasPressCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
   fGasPressCmd->SetRange("fGasPress>0.");

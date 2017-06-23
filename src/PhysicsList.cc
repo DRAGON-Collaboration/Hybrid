@@ -85,11 +85,6 @@ PhysicsList::PhysicsList() : G4VModularPhysicsList(),
   // protected member of the base class
   verboseLevel = 1;
 
-  const G4double Torr    = 1/760.*atmosphere;
-  const G4double Celsius = 273.15 + kelvin;
-  new G4UnitDefinition("Torr", "Torr", "Pressure", Torr);
-  new G4UnitDefinition("Celsius", "Celsius", "Temperature", Celsius);
-
   fMessenger = new PhysicsListMessenger(this);
 
   // EM physics
