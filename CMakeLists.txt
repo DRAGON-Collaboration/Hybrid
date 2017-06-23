@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------------
 # Setup the project
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(Hybrid)
 
 #----------------------------------------------------------------------------
@@ -44,26 +44,9 @@ add_executable(Hybrid Hybrid.cc ${sources} ${headers})
 target_link_libraries(Hybrid ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 
 #----------------------------------------------------------------------------
-# Copy all scripts to the build directory, i.e. the directory in which we
-# build Hybrid. This is so that we can run the executable directly because it
-# relies on these scripts being in the current working directory.
+# Copy all macros directory to the build directory.
 #
-set(Hybrid_SCRIPTS
-  init_vis.mac
-  vis.mac
-  c12.mac
-  alpha_244Cm.mac
-  alpha_241Am.mac
-  alpha_239Pu.mac
-  )
-
-foreach(_script ${Hybrid_SCRIPTS})
-  configure_file(
-    ${PROJECT_SOURCE_DIR}/${_script}
-    ${PROJECT_BINARY_DIR}/${_script}
-    COPYONLY
-    )
-endforeach()
+file(COPY macros DESTINATION ${PROJECT_BINARY_DIR})
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
