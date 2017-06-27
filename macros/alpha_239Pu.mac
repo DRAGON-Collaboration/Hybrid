@@ -2,6 +2,9 @@
 # Macro file to run simulation of 239Pu alphas
 #
 
+/testem/det/setGasMat isobutane30torr
+/testem/det/setWinThick 1.5 um
+
 /gps/pos/type Point
 /gps/particle ion               #specify an ion type projectile
 /gps/ion 2 4 2 
@@ -16,4 +19,4 @@
 /gps/pos/centre -1.2 0. 0. m        #approximate distance from source(doesn't really matter too much as you essentially have a planar distribution  arriving at the window)
 
 
-/run/beamOn 5000
+/run/beamOn 1000

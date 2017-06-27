@@ -2,6 +2,9 @@
 # Macro file to run simulation of 239Pu alphas
 #
 
+/testem/det/setGasMat isobutane30torr
+/testem/det/setWinThick 1.5 um
+
 /gps/pos/type Point
 /gps/particle ion               #specify an ion type projectile
 /gps/ion 2 4 2 
