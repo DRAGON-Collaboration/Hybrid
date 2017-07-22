@@ -236,10 +236,10 @@ void HistoManager::EndOfEvent(PrimaryGeneratorAction* fPrimary)
   //Records X and Y position of the end of the particle track
   if ( (std::abs(PositionY) <= DSSSDDetectorSizeYZ/2)&&(std::abs(PositionZ) <= DSSSDDetectorSizeYZ/2) )
     {
-      Fill2Histo(1, PositionY, PositionZ);
+      Fill2Histo(0, PositionY, PositionZ, 1);
     }
     //If energy is deposited in the active DSSSD material this is recorded
-  if (EdepDSSSD != 0.) Fill2Histo(2, EdepDSSSD, EdepGas, 1);
+  if (EdepDSSSD != 0.) Fill2Histo(1, EdepDSSSD, EdepGas, 1);
 
   //Outputs event data to text file
   std::ofstream EventOutput;
